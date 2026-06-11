@@ -16,9 +16,9 @@ export function CountdownTimer({ targetMs }: { targetMs: number }) {
   ];
 
   return (
-    <div className="flex justify-center gap-2 sm:gap-3">
+    <div className="flex justify-center gap-2 sm:gap-3" dir="ltr">
       {cells.map((cell) => (
-        <div key={cell.label} className="card-elevated w-16 rounded-lg py-2 text-center sm:w-20">
+        <div key={cell.label} className="card-elevated min-w-0 max-w-16 flex-1 rounded-lg py-2 text-center sm:max-w-20">
           <div
             className={cn(
               "font-display text-3xl sm:text-4xl",

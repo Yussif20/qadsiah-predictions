@@ -7,9 +7,9 @@ import { TeamFlag } from "@/components/ui/CountryFlag";
 
 function TeamBlock({ team, lang }: { team: TeamInfo; lang: string }) {
   return (
-    <div className="flex flex-1 flex-col items-center gap-2">
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-2">
       <TeamFlag team={team} size="lg" className="rounded ring-1 ring-white/10" />
-      <span className="text-center text-base font-extrabold sm:text-lg">
+      <span className="max-w-full break-words text-center text-base font-extrabold sm:text-lg">
         {teamDisplayName(team, lang)}
       </span>
     </div>
@@ -34,9 +34,9 @@ export function MatchHero({ match }: { match: Match }) {
 
       <div className="flex items-center justify-between gap-2" dir="ltr">
         <TeamBlock team={match.home} lang={i18n.language} />
-        <div className="px-1 text-center">
+        <div className="shrink-0 px-1 text-center">
           {completed ? (
-            <span className="font-display text-6xl text-foreground sm:text-7xl">
+            <span className="whitespace-nowrap font-display text-[clamp(2.5rem,13vw,3.75rem)] text-foreground sm:text-7xl">
               {match.actualScoreHome} <span className="text-primary">:</span>{" "}
               {match.actualScoreAway}
             </span>

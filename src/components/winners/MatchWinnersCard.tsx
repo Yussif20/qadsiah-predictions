@@ -65,11 +65,11 @@ export function MatchWinnersCard({ match, featured = false }: MatchWinnersCardPr
             <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-primary/30 to-primary/5 ring-1 ring-primary/40">
               <Gift className="size-6 text-primary" />
             </span>
-            <div>
+            <div className="min-w-0">
               <p className="text-[11px] font-bold text-muted-foreground">
                 {t("winners.prizeWinner")}
               </p>
-              <p className="text-xl font-extrabold text-primary sm:text-2xl">
+              <p className="break-words text-xl font-extrabold text-primary sm:text-2xl">
                 {match.prizeWinner.name}
               </p>
               <p className="text-xs text-muted-foreground" dir="ltr">
@@ -108,13 +108,13 @@ export function MatchWinnersCard({ match, featured = false }: MatchWinnersCardPr
                   <li
                     key={w.id}
                     className={cn(
-                      "flex items-center gap-1.5 rounded-full border bg-secondary/60 px-3 py-1.5 text-sm",
+                      "flex max-w-full items-center gap-1.5 rounded-full border bg-secondary/60 px-3 py-1.5 text-sm",
                       isPrize && "border-primary/60 bg-primary/10 text-primary"
                     )}
                   >
-                    {isPrize && <Crown className="size-3.5" />}
-                    <span className="font-semibold">{w.name}</span>
-                    <span className="text-xs text-muted-foreground" dir="ltr">
+                    {isPrize && <Crown className="size-3.5 shrink-0" />}
+                    <span className="min-w-0 break-words font-semibold">{w.name}</span>
+                    <span className="shrink-0 text-xs text-muted-foreground" dir="ltr">
                       {w.phoneMasked}
                     </span>
                   </li>

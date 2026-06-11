@@ -84,7 +84,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
         <div className="font-display text-6xl text-primary" dir="ltr">
           {prediction.predictedScoreHome} : {prediction.predictedScoreAway}
         </div>
-        <p className="mt-1 text-sm font-semibold">{prediction.name}</p>
+        <p className="mt-1 break-words text-sm font-semibold">{prediction.name}</p>
         <p className="text-xs text-muted-foreground" dir="ltr">
           {prediction.phoneMasked}
         </p>
@@ -110,7 +110,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
     <form onSubmit={onSubmit} className="card-elevated space-y-4 rounded-xl p-5 sm:p-6">
       <h3 className="text-center text-lg font-extrabold">{t("form.title")}</h3>
 
-      <div className="flex gap-3" dir="ltr">
+      <div className="flex gap-2 sm:gap-3" dir="ltr">
         <ScoreInput label={homeName} team={match.home} value={scoreHome} onChange={setScoreHome} />
         <ScoreInput label={awayName} team={match.away} value={scoreAway} onChange={setScoreAway} />
       </div>

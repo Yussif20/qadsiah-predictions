@@ -11,14 +11,14 @@ interface ScoreInputProps {
 }
 
 const stepBtnClass =
-  "flex size-10 items-center justify-center rounded-full border bg-muted transition-all hover:border-primary hover:bg-primary/15 active:scale-90 disabled:opacity-30 disabled:hover:border-border disabled:hover:bg-muted";
+  "flex size-9 shrink-0 items-center justify-center rounded-full border bg-muted transition-all hover:border-primary hover:bg-primary/15 active:scale-90 disabled:opacity-30 disabled:hover:border-border disabled:hover:bg-muted sm:size-10";
 
 export function ScoreInput({ label, team, value, onChange }: ScoreInputProps) {
   return (
-    <div className="card-elevated flex flex-1 flex-col items-center gap-2 rounded-xl p-4">
+    <div className="card-elevated flex min-w-0 flex-1 flex-col items-center gap-2 rounded-xl p-3 sm:p-4">
       <TeamFlag team={team} size="md" />
-      <span className="text-center text-sm font-bold">{label}</span>
-      <div className="flex items-center gap-3" dir="ltr">
+      <span className="max-w-full break-words text-center text-sm font-bold">{label}</span>
+      <div className="flex w-full max-w-40 items-center justify-between" dir="ltr">
         <button
           type="button"
           aria-label="minus"
@@ -29,7 +29,10 @@ export function ScoreInput({ label, team, value, onChange }: ScoreInputProps) {
           <Minus className="size-4" />
         </button>
         {/* Keyed remount replays the pop animation on every change */}
-        <span key={value} className="score-pop w-12 text-center font-display text-5xl text-primary">
+        <span
+          key={value}
+          className="score-pop w-10 min-w-0 text-center font-display text-4xl text-primary sm:w-12 sm:text-5xl"
+        >
           {value}
         </span>
         <button
