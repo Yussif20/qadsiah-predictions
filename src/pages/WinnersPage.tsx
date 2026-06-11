@@ -13,11 +13,22 @@ export function WinnersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-black text-primary">{t("winners.title")}</h1>
-        <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-          {t("winners.subtitle")}
-        </p>
+      {/* Trophy banner — artwork keeps its empty dark side for the title */}
+      <div className="relative overflow-hidden rounded-xl border">
+        <img
+          src="/images/winners.jpg"
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/85" />
+        <div className="relative px-4 py-12 text-center sm:py-14">
+          <h1 className="text-3xl font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            {t("winners.title")}
+          </h1>
+          <p className="mx-auto mt-1 max-w-md text-sm font-semibold text-foreground/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+            {t("winners.subtitle")}
+          </p>
+        </div>
       </div>
 
       {loading ? (

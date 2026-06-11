@@ -25,9 +25,22 @@ export function HomePage() {
 
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-black text-primary">{t("appName")}</h1>
-        <p className="text-sm text-muted-foreground">{t("appTagline")}</p>
+      {/* Hero banner — stadium art with the headline in its dark upper area */}
+      <div className="relative overflow-hidden rounded-xl border">
+        <img
+          src="/images/hero.jpg"
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/80" />
+        <div className="relative px-4 pb-24 pt-10 text-center sm:pb-28 sm:pt-12">
+          <h1 className="text-3xl font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-4xl">
+            {t("appName")}
+          </h1>
+          <p className="mt-1 text-sm font-semibold text-foreground/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+            {t("appTagline")}
+          </p>
+        </div>
       </div>
 
       {loading ? (
@@ -36,8 +49,13 @@ export function HomePage() {
           <div className="shimmer h-72 rounded-xl border bg-card/40" />
         </div>
       ) : !current ? (
-        <div className="rounded-xl border bg-card/60 p-10 text-center text-sm text-muted-foreground">
-          {t("match.noMatches")}
+        <div className="rounded-xl border bg-card/60 p-8 text-center">
+          <img
+            src="/images/steps.jpg"
+            alt=""
+            className="mx-auto mb-4 w-48 rounded-xl border"
+          />
+          <p className="text-sm text-muted-foreground">{t("match.noMatches")}</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -55,14 +73,22 @@ export function HomePage() {
 
           {current.status === "locked" && (
             <>
-              <div className="flex items-center justify-center gap-3 rounded-xl border border-warning/40 bg-warning/10 p-4 text-sm font-semibold text-warning">
-                <Lock className="size-5 shrink-0" />
-                <span>
-                  {t("match.locked")}
-                  <span className="block text-xs font-normal opacity-80">
-                    {t("match.lockedHint")}
+              <div className="relative overflow-hidden rounded-xl border border-warning/40">
+                <img
+                  src="/images/matchday.jpg"
+                  alt=""
+                  className="absolute inset-0 size-full object-cover"
+                />
+                <div className="absolute inset-0 bg-background/60" />
+                <div className="relative flex items-center justify-center gap-3 p-6 text-sm font-bold text-warning">
+                  <Lock className="size-5 shrink-0 drop-shadow" />
+                  <span className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+                    {t("match.locked")}
+                    <span className="block text-xs font-semibold opacity-90">
+                      {t("match.lockedHint")}
+                    </span>
                   </span>
-                </span>
+                </div>
               </div>
               <PredictionForm match={current.match} open={false} />
             </>

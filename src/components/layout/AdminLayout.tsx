@@ -13,7 +13,7 @@ export function AdminLayout() {
       <header className="glass sticky top-0 z-40 border-b">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <Link to="/admin" className="flex items-center gap-2.5">
-            <img src="/favicon.svg" alt="" className="size-8" />
+            <img src="/images/emblem.png" alt="" className="size-8 rounded-lg" />
             <span className="text-sm font-extrabold">{t("nav.title")}</span>
           </Link>
           <div className="flex items-center gap-2">

@@ -84,7 +84,9 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
           {prediction.predictedScoreHome} : {prediction.predictedScoreAway}
         </div>
         <p className="mt-1 text-sm font-semibold">{prediction.name}</p>
-        <p className="text-xs text-muted-foreground">{prediction.phoneMasked}</p>
+        <p className="text-xs text-muted-foreground" dir="ltr">
+          {prediction.phoneMasked}
+        </p>
         {open && (
           <>
             <button

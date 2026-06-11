@@ -1,5 +1,7 @@
 # Qadsiah Predictions — World Cup 2026
 
+**Public brand name:** فارس المونديال / "Mondial Knight" (the knight is Al-Qadsiah's emblem; each match's lucky-wheel winner is that round's Knight). The repo/project name stays `qadsiah-predictions`.
+
 A public, QR-code-driven score prediction site for Al-Qadsiah FC. Employees watching Saudi national team matches at the club venue scan a poster QR, enter **name + phone** (no account), and predict the exact score. After the match, exact-score predictors (or the closest, when nobody is exact) become winners, and a **lucky wheel** is spun live on the venue projector to pick the prize winner.
 
 **Client:** Al-Qadsiah FC (Saudi Arabia)

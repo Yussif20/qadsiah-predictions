@@ -20,7 +20,7 @@ export function PublicLayout() {
       <header className="glass sticky top-0 z-40 border-b">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-2 px-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src="/favicon.svg" alt="" className="size-9" />
+            <img src="/images/emblem.png" alt="" className="size-9 rounded-lg" />
             <span className="leading-tight">
               <span className="block text-sm font-extrabold sm:text-base">{t("appName")}</span>
               <span className="block text-[11px] text-muted-foreground">{t("appTagline")}</span>

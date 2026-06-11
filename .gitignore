@@ -7,5 +7,7 @@ dist-ssr
 !.env.example
 .netlify
 .firebase
+# Heavy AI-generated originals — web-sized copies live in public/images
+images-raw
 *.log
 .DS_Store

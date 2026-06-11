@@ -43,7 +43,7 @@ export function AdminLoginPage() {
         className="w-full max-w-sm space-y-4 rounded-xl border bg-card/80 p-8"
       >
         <div className="text-center">
-          <img src="/favicon.svg" alt="" className="mx-auto mb-3 size-14" />
+          <img src="/images/emblem.png" alt="" className="mx-auto mb-3 size-16 rounded-xl" />
           <h1 className="text-xl font-extrabold">{t("login.title")}</h1>
         </div>
         <div>

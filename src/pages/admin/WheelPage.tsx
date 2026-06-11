@@ -94,6 +94,11 @@ export function WheelPage() {
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center gap-6 p-6">
+      {/* Celebration backdrop behind the wheel — designed dark, no overlay needed */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-10 bg-background bg-cover bg-center"
+        style={{ backgroundImage: "url(/images/wheel-bg.jpg)" }}
+      />
       <Link
         to={`/admin/matches/${matchId}`}
         className="absolute top-5 inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground ltr:left-5 rtl:right-5"
