@@ -58,6 +58,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Full-app artwork backdrop. A fixed pseudo-element instead of
+   background-attachment: fixed, which iOS Safari does not support.
+   Low opacity lets the dark gradient above do the legibility work;
+   the wheel page's own opaque backdrop intentionally covers this. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  /* contain, never cover: the artwork is portrait (848x1174) and cover-cropping
+     it on wide screens zooms into a blurry band. Full image, centered, with the
+     body gradient filling the sides; soft mask melts its edges into the dark. */
+  background: url("/images/app-bg.jpg") center / contain no-repeat;
+  mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
 [dir="rtl"] body {
   font-family: var(--font-arabic);
 }
@@ -314,12 +333,18 @@ button {
     0 8px 28px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Headline gradient (fill, not font — Cairo/RTL safe) ── */
+/* ── Headline gradient (fill, not font — Cairo/RTL safe) ──
+   background-clip: text only paints inside the element box, so Arabic
+   descenders that overhang a tight line-height would render transparent
+   ("cropped"). The padding extends the paint box; the negative margins
+   cancel it out so layout is unchanged. */
 .text-gradient-gold {
   background: linear-gradient(180deg, #fff7b0, var(--color-primary) 60%, var(--color-gold-deep));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  padding-block: 0.18em;
+  margin-block: -0.18em;
 }
 
 /* ── Wheel decorations ─────────────────────────────────── */

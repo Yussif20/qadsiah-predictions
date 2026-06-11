@@ -25,11 +25,8 @@ export function PublicLayout() {
               alt=""
               className="size-9 rounded-lg ring-1 ring-primary/30"
             />
-            <span className="leading-tight">
-              <span className="text-gradient-gold block text-sm font-extrabold sm:text-base">
-                {t("appName")}
-              </span>
-              <span className="block text-[11px] text-muted-foreground">{t("appTagline")}</span>
+            <span className="text-gradient-gold text-base font-extrabold sm:text-lg">
+              {t("appName")}
             </span>
           </Link>
           <nav className="flex items-center gap-1">

@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/context/AuthContext";
 import { PublicLayout } from "@/components/layout/PublicLayout";
+import SparkleBackground from "@/components/ui/SparkleBackground";
 import { FullScreenSpinner } from "@/components/ui/Spinner";
 import { HomePage } from "@/pages/HomePage";
 import { WinnersPage } from "@/pages/WinnersPage";
@@ -31,6 +32,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <SparkleBackground />
         <Toaster richColors position="top-center" />
         <Suspense fallback={<FullScreenSpinner />}>
           <Routes>
