@@ -2,7 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { ChevronLeft, ChevronRight, CloudDownload, Gift, Pencil, Plus, Trash2 } from "lucide-react";
+import {
+  CalendarDays,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  CloudDownload,
+  Gift,
+  Pencil,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import type { Match } from "@/types";
 import { STAGE_LABEL_KEYS, teamDisplayName } from "@/lib/constants";
 import { deleteMatchCascade, type MatchInput } from "@/lib/firestore";
@@ -68,7 +79,7 @@ export function AdminMatchesPage() {
           </button>
           <button
             onClick={() => setModal({ open: true, match: null, initial: null })}
-            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-extrabold text-primary-foreground hover:opacity-90"
+            className="btn-cta flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-extrabold"
           >
             <Plus className="size-4" />
             {t("matches.create")}
@@ -79,12 +90,13 @@ export function AdminMatchesPage() {
       <div className="grid grid-cols-3 gap-3">
         {(
           [
-            [t("stats.matches"), matches.length],
-            [t("stats.upcoming"), upcomingCount],
-            [t("stats.completed"), completedCount],
+            [t("stats.matches"), matches.length, CalendarDays],
+            [t("stats.upcoming"), upcomingCount, Clock],
+            [t("stats.completed"), completedCount, CheckCircle2],
           ] as const
-        ).map(([label, value]) => (
-          <div key={label} className="rounded-xl border bg-card/60 p-4 text-center">
+        ).map(([label, value, Icon]) => (
+          <div key={label} className="card-elevated rounded-xl p-4 text-center">
+            <Icon className="mx-auto mb-1 size-4 text-primary/60" />
             <div className="font-display text-3xl text-primary">{value}</div>
             <div className="text-xs text-muted-foreground">{label}</div>
           </div>
@@ -107,7 +119,7 @@ export function AdminMatchesPage() {
             return (
               <li
                 key={match.id}
-                className="flex flex-wrap items-center gap-3 rounded-xl border bg-card/60 p-4"
+                className="card-elevated flex flex-wrap items-center gap-3 rounded-xl p-4 transition-colors hover:border-primary/40"
               >
                 <span className="flex shrink-0 items-center gap-1" dir="ltr">
                   <TeamFlag team={match.home} size="sm" />
@@ -131,14 +143,17 @@ export function AdminMatchesPage() {
                 </div>
                 <span
                   className={cn(
-                    "rounded-full px-2.5 py-0.5 text-[11px] font-bold",
+                    "flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold",
                     STATUS_BADGES[status]
                   )}
                 >
                   {status === "completed" && match.actualScoreHome !== null ? (
                     <span dir="ltr">{`${match.actualScoreHome} : ${match.actualScoreAway}`}</span>
                   ) : (
-                    t(`status.${status}`)
+                    <>
+                      <span className="size-1.5 rounded-full bg-current" />
+                      {t(`status.${status}`)}
+                    </>
                   )}
                 </span>
                 <div className="flex items-center gap-1">

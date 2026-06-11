@@ -79,15 +79,20 @@ export function ApiImportModal({ existingApiIds, onPick, onClose }: ApiImportMod
   const shown = (matches ?? []).filter((fd) => !saudiOnly || involvesSaudi(fd));
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-      <div className="flex max-h-[90vh] w-full max-w-lg flex-col gap-4 rounded-xl border bg-card p-6">
+    <div className="fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+      <div className="rise-in card-elevated flex max-h-[90vh] w-full max-w-lg flex-col gap-4 rounded-xl p-6">
         <div className="flex items-center justify-between">
           <h2 className="flex items-center gap-2 text-lg font-extrabold">
             <CloudDownload className="size-5 text-primary" />
             {t("api.title")}
           </h2>
-          <button type="button" onClick={onClose} aria-label="close">
-            <X className="size-5 text-muted-foreground hover:text-foreground" />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="close"
+            className="rounded-full border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+          >
+            <X className="size-4" />
           </button>
         </div>
 
@@ -133,7 +138,7 @@ export function ApiImportModal({ existingApiIds, onPick, onClose }: ApiImportMod
               return (
                 <li
                   key={fd.id}
-                  className="flex items-center gap-3 rounded-lg border bg-secondary/40 p-3"
+                  className="flex items-center gap-3 rounded-lg border bg-secondary/40 p-3 transition-colors hover:border-primary/40"
                 >
                   <span className="flex shrink-0 items-center gap-1" dir="ltr">
                     <TeamFlag team={input.home!} size="sm" />

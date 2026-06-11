@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { Pencil, Send } from "lucide-react";
+import { CheckCircle2, Pencil, Send } from "lucide-react";
 import type { Match } from "@/types";
 import { teamDisplayName } from "@/lib/constants";
 import { toLocalFormat } from "@/lib/phone";
@@ -10,7 +10,7 @@ import { ScoreInput } from "./ScoreInput";
 import { Spinner } from "@/components/ui/Spinner";
 
 export const inputClass =
-  "w-full rounded-lg border border-input bg-secondary/40 px-3 py-2.5 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring/60";
+  "w-full rounded-lg border border-input bg-secondary/40 px-3 py-2.5 text-sm placeholder:text-muted-foreground/60 transition-shadow focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-ring/60";
 
 interface PredictionFormProps {
   match: Match;
@@ -67,7 +67,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
 
   if (loading) {
     return (
-      <div className="flex justify-center rounded-xl border bg-card/60 p-10">
+      <div className="card-elevated flex justify-center rounded-xl p-10">
         <Spinner className="size-7" />
       </div>
     );
@@ -76,11 +76,12 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
   // Existing prediction summary (and the only view once the match kicked off)
   if (prediction && !editing) {
     return (
-      <section className="rounded-xl border bg-card/60 p-5 text-center">
-        <h3 className="mb-1 text-sm font-bold text-muted-foreground">
+      <section className="card-gold rounded-xl p-5 text-center">
+        <h3 className="mb-1 flex items-center justify-center gap-1.5 text-sm font-bold text-muted-foreground">
+          <CheckCircle2 className="size-4 text-success" />
           {t("form.yourPrediction")}
         </h3>
-        <div className="font-display text-5xl text-primary" dir="ltr">
+        <div className="font-display text-6xl text-primary" dir="ltr">
           {prediction.predictedScoreHome} : {prediction.predictedScoreAway}
         </div>
         <p className="mt-1 text-sm font-semibold">{prediction.name}</p>
@@ -106,7 +107,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
   if (!open) return null;
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border bg-card/60 p-5 sm:p-6">
+    <form onSubmit={onSubmit} className="card-elevated space-y-4 rounded-xl p-5 sm:p-6">
       <h3 className="text-center text-lg font-extrabold">{t("form.title")}</h3>
 
       <div className="flex gap-3" dir="ltr">
@@ -146,7 +147,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
       <button
         type="submit"
         disabled={submitting}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-sm font-extrabold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="btn-cta btn-sheen flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-extrabold"
       >
         {submitting ? <Spinner className="size-4 text-primary-foreground" /> : <Send className="size-4" />}
         {prediction ? t("form.update") : t("form.submit")}

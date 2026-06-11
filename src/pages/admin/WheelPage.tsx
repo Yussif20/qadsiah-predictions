@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Gift, RotateCcw } from "lucide-react";
 import type { Prediction } from "@/types";
 import { teamDisplayName } from "@/lib/constants";
 import { celebrationBurst } from "@/lib/confetti";
+import { cn } from "@/lib/utils";
 import { saveWheelSpin } from "@/lib/firestore";
 import { useMatch } from "@/hooks/useMatches";
 import { useMatchWinners } from "@/hooks/useMatchWinners";
@@ -108,17 +109,17 @@ export function WheelPage() {
       </Link>
 
       {!match || !completed ? (
-        <p className="rounded-xl border bg-card/60 p-10 text-center text-sm text-muted-foreground">
+        <p className="card-elevated rounded-xl p-10 text-center text-sm text-muted-foreground">
           {t("wheel.needsResult")}
         </p>
       ) : winners.length === 0 ? (
-        <p className="rounded-xl border bg-card/60 p-10 text-center text-sm text-muted-foreground">
+        <p className="card-elevated rounded-xl p-10 text-center text-sm text-muted-foreground">
           {t("wheel.noWinners")}
         </p>
       ) : (
         <>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-primary sm:text-4xl">{matchTitle}</h1>
+            <h1 className="text-gradient-gold text-4xl font-black sm:text-5xl">{matchTitle}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {t("common:winners.prizeWinner")}
             </p>
@@ -135,7 +136,10 @@ export function WheelPage() {
             <button
               onClick={spin}
               disabled={spinning || available.length === 0}
-              className="rounded-full bg-primary px-14 py-4 text-2xl font-black text-primary-foreground shadow-[0_0_40px_rgba(249,223,0,0.35)] transition-transform hover:scale-105 disabled:opacity-40"
+              className={cn(
+                "btn-cta btn-sheen rounded-full px-16 py-5 text-3xl font-black",
+                !spinning && !revealedWinner && "cta-pulse"
+              )}
             >
               {spinning ? t("wheel.spinning") : t("wheel.spin")}
             </button>
@@ -145,17 +149,36 @@ export function WheelPage() {
                 {t("detail.prizeWinner")}: {match.prizeWinner.name}
               </p>
             )}
+            {match.wheelSpins.length > 0 && (
+              <div className="flex max-w-md flex-col items-center gap-1.5">
+                <p className="text-[11px] text-muted-foreground">{t("wheel.respinHint")}</p>
+                <div className="flex flex-wrap items-center justify-center gap-1.5">
+                  {match.wheelSpins.map((s) => (
+                    <span
+                      key={s.predictionId}
+                      className="rounded-full border bg-secondary/50 px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground"
+                    >
+                      {s.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}
 
       {/* Winner reveal overlay */}
       {revealedWinner && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-black/85 p-6">
+        <div className="fade-in fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-black/85 p-6 backdrop-blur-sm">
           <p className="text-2xl font-bold text-muted-foreground">{t("wheel.winner")}</p>
-          <div className="winner-glow rounded-3xl border-2 border-primary bg-card px-10 py-12 text-center sm:px-20">
-            <Gift className="mx-auto mb-4 size-12 text-primary" />
-            <p className="text-4xl font-black text-primary sm:text-6xl">{revealedWinner.name}</p>
+          <div className="reveal-pop winner-glow card-gold rounded-3xl px-10 py-12 text-center sm:px-20">
+            <span className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-gradient-to-b from-primary/30 to-primary/5 ring-1 ring-primary/40">
+              <Gift className="size-8 text-primary" />
+            </span>
+            <p className="text-gradient-gold text-5xl font-black sm:text-7xl">
+              {revealedWinner.name}
+            </p>
             <p className="mt-3 text-lg text-muted-foreground" dir="ltr">
               {revealedWinner.phoneMasked}
             </p>

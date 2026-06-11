@@ -53,6 +53,7 @@
   "winners": {
     "title": "Winners",
     "subtitle": "Correct predictions for every match — and the lucky wheel prize winner.",
+    "latest": "Latest match",
     "exact": "Exact score",
     "closest": "Closest prediction",
     "prizeWinner": "Lucky wheel prize winner",

@@ -27,7 +27,7 @@ interface TeamFieldsProps {
 function TeamFields({ legend, team, onChange }: TeamFieldsProps) {
   const { t } = useTranslation("admin");
   return (
-    <fieldset className="space-y-3 rounded-lg border p-3">
+    <fieldset className="space-y-3 rounded-lg border bg-secondary/20 p-3">
       <legend className="px-1 text-xs font-extrabold text-primary">{legend}</legend>
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
@@ -126,17 +126,22 @@ export function MatchFormModal({ match, initial, onClose }: MatchFormModalProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+    <div className="fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
       <form
         onSubmit={onSubmit}
-        className="max-h-[90vh] w-full max-w-lg space-y-4 overflow-y-auto rounded-xl border bg-card p-6"
+        className="rise-in card-elevated max-h-[90vh] w-full max-w-lg space-y-4 overflow-y-auto rounded-xl p-6"
       >
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-extrabold">
             {match ? t("matches.edit") : t("matches.create")}
           </h2>
-          <button type="button" onClick={onClose} aria-label="close">
-            <X className="size-5 text-muted-foreground hover:text-foreground" />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="close"
+            className="rounded-full border p-2 text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+          >
+            <X className="size-4" />
           </button>
         </div>
 
@@ -184,7 +189,7 @@ export function MatchFormModal({ match, initial, onClose }: MatchFormModalProps)
           <button
             type="submit"
             disabled={saving}
-            className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2 text-sm font-extrabold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+            className="btn-cta flex items-center gap-2 rounded-lg px-5 py-2 text-sm font-extrabold"
           >
             {saving && <Spinner className="size-4 text-primary-foreground" />}
             {t("matches.save")}

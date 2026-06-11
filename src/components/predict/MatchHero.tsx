@@ -8,7 +8,7 @@ import { TeamFlag } from "@/components/ui/CountryFlag";
 function TeamBlock({ team, lang }: { team: TeamInfo; lang: string }) {
   return (
     <div className="flex flex-1 flex-col items-center gap-2">
-      <TeamFlag team={team} size="lg" />
+      <TeamFlag team={team} size="lg" className="rounded ring-1 ring-white/10" />
       <span className="text-center text-base font-extrabold sm:text-lg">
         {teamDisplayName(team, lang)}
       </span>
@@ -21,9 +21,9 @@ export function MatchHero({ match }: { match: Match }) {
   const completed = match.status === "completed";
 
   return (
-    <section className="rounded-xl border bg-card/60 p-5 sm:p-6">
+    <section className="card-gold rounded-xl p-5 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-        <span className="rounded-full bg-primary/15 px-3 py-1 font-bold text-primary">
+        <span className="rounded-full bg-gradient-to-b from-primary/25 to-primary/5 px-3 py-1 font-bold text-primary ring-1 ring-primary/30">
           {t(STAGE_LABEL_KEYS[match.stage])}
         </span>
         <span className="flex items-center gap-1">
@@ -36,20 +36,28 @@ export function MatchHero({ match }: { match: Match }) {
         <TeamBlock team={match.home} lang={i18n.language} />
         <div className="px-1 text-center">
           {completed ? (
-            <span className="font-display text-5xl text-foreground sm:text-6xl">
+            <span className="font-display text-6xl text-foreground sm:text-7xl">
               {match.actualScoreHome} <span className="text-primary">:</span>{" "}
               {match.actualScoreAway}
             </span>
           ) : (
-            <span className="font-display text-3xl text-primary sm:text-4xl">{t("vs")}</span>
+            /* Split-brand diamond. The label inherits Cairo — Arabic "ضد"
+               must never go through font-display (no Arabic glyphs). */
+            <div className="mx-2 flex size-12 rotate-45 items-center justify-center rounded-lg bg-[linear-gradient(135deg,#F9DF00_50%,#EE0000_50%)] p-[3px] shadow-[0_0_20px_rgba(249,223,0,0.35)]">
+              <div className="flex size-full items-center justify-center rounded-md bg-background">
+                <span className="-rotate-45 text-sm font-black text-primary">{t("vs")}</span>
+              </div>
+            </div>
           )}
         </div>
         <TeamBlock team={match.away} lang={i18n.language} />
       </div>
 
       {completed && (
-        <p className="mt-3 text-center text-xs font-semibold text-muted-foreground">
-          {t("match.completed")}
+        <p className="mt-4 flex justify-center">
+          <span className="rounded-full bg-success/15 px-3 py-1 text-xs font-bold text-success">
+            {t("match.completed")}
+          </span>
         </p>
       )}
     </section>

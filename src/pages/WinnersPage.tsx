@@ -22,7 +22,7 @@ export function WinnersPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/85" />
         <div className="relative px-4 py-12 text-center sm:py-14">
-          <h1 className="text-3xl font-black text-primary drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+          <h1 className="text-gradient-gold text-3xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-4xl">
             {t("winners.title")}
           </h1>
           <p className="mx-auto mt-1 max-w-md text-sm font-semibold text-foreground/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
@@ -37,14 +37,22 @@ export function WinnersPage() {
           <div className="shimmer h-40 rounded-xl border bg-card/40" />
         </div>
       ) : completed.length === 0 ? (
-        <div className="rounded-xl border bg-card/60 p-10 text-center">
-          <Trophy className="mx-auto mb-3 size-10 text-muted-foreground/50" />
+        <div className="rise-in card-elevated rounded-xl p-10 text-center">
+          <div className="mx-auto mb-3 flex size-14 items-center justify-center rounded-full bg-gradient-to-b from-primary/25 to-primary/5 ring-1 ring-primary/30">
+            <Trophy className="size-7 text-primary/60" />
+          </div>
           <p className="text-sm text-muted-foreground">{t("winners.noCompleted")}</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {completed.map((m) => (
-            <MatchWinnersCard key={m.id} match={m} />
+          {completed.map((m, i) => (
+            <div
+              key={m.id}
+              className="rise-in"
+              style={{ animationDelay: `${Math.min(i, 5) * 80}ms` }}
+            >
+              <MatchWinnersCard match={m} featured={i === 0} />
+            </div>
           ))}
         </div>
       )}

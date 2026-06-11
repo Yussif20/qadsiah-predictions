@@ -64,7 +64,7 @@ function ResultEntry({ match }: { match: Match }) {
   };
 
   return (
-    <section className="space-y-4 rounded-xl border bg-card/60 p-5">
+    <section className="card-elevated space-y-4 rounded-xl p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-base font-extrabold">{t("detail.result")}</h2>
         {match.apiMatchId != null && (
@@ -98,7 +98,7 @@ function ResultEntry({ match }: { match: Match }) {
       <button
         onClick={onSaveResult}
         disabled={saving}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-extrabold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+        className="btn-cta flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-extrabold"
       >
         {saving ? <Spinner className="size-4 text-primary-foreground" /> : <Save className="size-4" />}
         {t("detail.enterResult")}
@@ -161,7 +161,7 @@ export function AdminMatchDetailPage() {
 
       {/* Winners + wheel */}
       {completed && (
-        <section className="space-y-3 rounded-xl border bg-card/60 p-5">
+        <section className="card-elevated space-y-3 rounded-xl p-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-base font-extrabold">
               {t("detail.winners")}{" "}
@@ -172,7 +172,7 @@ export function AdminMatchDetailPage() {
             {match.winnersCount > 0 ? (
               <Link
                 to={`/admin/wheel/${match.id}`}
-                className="flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-extrabold text-accent-foreground hover:opacity-90"
+                className="btn-cta-accent flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-extrabold"
               >
                 <FerrisWheel className="size-4" />
                 {t("detail.openWheel")}
@@ -201,7 +201,7 @@ export function AdminMatchDetailPage() {
       )}
 
       {/* Predictions table */}
-      <section className="rounded-xl border bg-card/60 p-5">
+      <section className="card-elevated rounded-xl p-5">
         <h2 className="mb-3 text-base font-extrabold">
           {t("detail.predictions")}{" "}
           <span className="text-sm font-semibold text-muted-foreground">({rows.length})</span>
@@ -230,13 +230,16 @@ export function AdminMatchDetailPage() {
                 {rows.map((row) => (
                   <tr
                     key={row.id}
-                    className={cn("border-b border-border/50", row.isWinner && "bg-primary/5")}
+                    className={cn(
+                      "border-b border-border/50 odd:bg-secondary/20",
+                      row.isWinner && "border-s-2 border-s-primary"
+                    )}
                   >
-                    <td className="py-2 font-semibold">{row.name}</td>
+                    <td className="py-2 ps-2 font-semibold">{row.name}</td>
                     <td className="py-2" dir="ltr">
                       {row.phone ? (
                         revealed.has(row.id) ? (
-                          <span className="font-mono">{toLocalFormat(row.phone)}</span>
+                          <span className="font-mono text-primary">{toLocalFormat(row.phone)}</span>
                         ) : (
                           <button
                             onClick={() => toggleReveal(row.id)}

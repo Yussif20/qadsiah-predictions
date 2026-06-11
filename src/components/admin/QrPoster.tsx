@@ -157,7 +157,7 @@ export function QrPoster() {
   };
 
   return (
-    <section className="rounded-xl border bg-card/60 p-5">
+    <section className="card-elevated rounded-xl p-5">
       <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold">
         <QrCodeIcon className="size-5 text-primary" />
         {t("qr.title")}
@@ -189,7 +189,11 @@ export function QrPoster() {
           </div>
         </div>
         {dataUrl && (
-          <img src={dataUrl} alt="QR" className="w-40 rounded-lg border bg-white p-2" />
+          <img
+            src={dataUrl}
+            alt="QR"
+            className="w-40 rounded-lg border bg-white p-2 shadow-[0_0_24px_rgba(249,223,0,0.15)]"
+          />
         )}
       </div>
 

@@ -10,7 +10,7 @@ export function AdminLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="glass sticky top-0 z-40 border-b">
+      <header className="glass sticky top-0 z-40">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <Link to="/admin" className="flex items-center gap-2.5">
             <img src="/images/emblem.png" alt="" className="size-8 rounded-lg" />
@@ -34,6 +34,7 @@ export function AdminLayout() {
             </button>
           </div>
         </div>
+        <div className="divider-glow" />
       </header>
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">

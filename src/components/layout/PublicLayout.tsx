@@ -17,12 +17,18 @@ export function PublicLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="glass sticky top-0 z-40 border-b">
+      <header className="glass sticky top-0 z-40">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-2 px-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src="/images/emblem.png" alt="" className="size-9 rounded-lg" />
+            <img
+              src="/images/emblem.png"
+              alt=""
+              className="size-9 rounded-lg ring-1 ring-primary/30"
+            />
             <span className="leading-tight">
-              <span className="block text-sm font-extrabold sm:text-base">{t("appName")}</span>
+              <span className="text-gradient-gold block text-sm font-extrabold sm:text-base">
+                {t("appName")}
+              </span>
               <span className="block text-[11px] text-muted-foreground">{t("appTagline")}</span>
             </span>
           </Link>
@@ -47,13 +53,18 @@ export function PublicLayout() {
             </Link>
           </nav>
         </div>
+        <div className="divider-glow" />
       </header>
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
         <Outlet />
       </main>
 
-      <footer className="py-8 text-center text-xs text-muted-foreground">{t("footer")}</footer>
+      <footer className="pb-8 pt-2 text-center text-xs text-muted-foreground">
+        <div className="divider-glow mx-auto mb-5 max-w-3xl px-4" />
+        <img src="/images/emblem.png" alt="" className="mx-auto mb-2 size-7 rounded opacity-50" />
+        {t("footer")}
+      </footer>
     </div>
   );
 }

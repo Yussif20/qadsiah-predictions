@@ -37,10 +37,12 @@ export function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="relative flex min-h-screen items-center justify-center p-4">
+      {/* Faint knight watermark behind the form */}
+      <div className="pointer-events-none fixed inset-0 bg-[url(/images/emblem.png)] bg-[length:50vmin] bg-center bg-no-repeat opacity-[0.04]" />
       <form
         onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-4 rounded-xl border bg-card/80 p-8"
+        className="rise-in card-elevated relative w-full max-w-sm space-y-4 rounded-xl p-8"
       >
         <div className="text-center">
           <img src="/images/emblem.png" alt="" className="mx-auto mb-3 size-16 rounded-xl" />
@@ -75,7 +77,7 @@ export function AdminLoginPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-extrabold text-primary-foreground hover:opacity-90 disabled:opacity-50"
+          className="btn-cta flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-extrabold"
         >
           {submitting ? <Spinner className="size-4 text-primary-foreground" /> : <LogIn className="size-4" />}
           {t("login.submit")}
