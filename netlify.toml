@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+# Route football-api calls through a Netlify function that injects the
+# X-Auth-Token header server-side, so the API key stays out of the client
+# bundle. Must come before the SPA fallback.
+[[redirects]]
+  from = "/football-api/*"
+  to = "/.netlify/functions/football-proxy/:splat"
+  status = 200
+  force = true
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

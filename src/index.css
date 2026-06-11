@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Al-Qadsiah brand: yellow #F9DF00 + red #EE0000 on warm near-black */
+  --color-background: #0B0905;
+  --color-foreground: #FBF7EA;
+  --color-card: #161208;
+  --color-card-foreground: #FBF7EA;
+  --color-popover: #161208;
+  --color-popover-foreground: #FBF7EA;
+  --color-primary: #F9DF00;
+  --color-primary-foreground: #181400;
+  --color-secondary: #241E0F;
+  --color-secondary-foreground: #FBF7EA;
+  --color-muted: #241E0F;
+  --color-muted-foreground: #B0A788;
+  --color-accent: #EE0000;
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #332B16;
+  --color-input: #332B16;
+  --color-ring: #F9DF00;
+  --color-success: #22C55E;
+  --color-success-foreground: #FFFFFF;
+  --color-warning: #F59E0B;
+  --color-warning-foreground: #0F172A;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Same family setup as reda-predictions: Space Grotesk for Latin, Cairo
+     for Arabic (applied via the RTL rule below), Bebas Neue for score digits */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-arabic: "Cairo", system-ui, sans-serif;
+  --font-display: "Bebas Neue", "Space Grotesk", system-ui, sans-serif;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, #3d3406 0%, #241e06 28%, #120e04 55%, #0b0905 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-arabic);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted-foreground);
+}
+
+/* ── Glass header / cards ──────────────────────────────── */
+.glass {
+  background: rgba(22, 18, 8, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* ── Shimmer loading ───────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255, 255, 255, 0.08) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* ── Winner glow (prize winner highlight + wheel result) ─ */
+@keyframes winner-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 24px rgba(249, 223, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 48px rgba(249, 223, 0, 0.55);
+  }
+}
+.winner-glow {
+  animation: winner-glow 2.4s ease-in-out infinite;
+}

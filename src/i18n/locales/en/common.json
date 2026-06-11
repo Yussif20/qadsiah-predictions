@@ -1,0 +1,74 @@
+{
+  "appName": "Qadsiah Predictions",
+  "appTagline": "World Cup 2026",
+  "language": "العربية",
+  "saudiArabia": "Saudi Arabia",
+  "vs": "VS",
+  "loading": "Loading…",
+  "nav": {
+    "predict": "Predict",
+    "winners": "Winners",
+    "admin": "Admin login"
+  },
+  "stages": {
+    "group": "Group Stage",
+    "round32": "Round of 32",
+    "round16": "Round of 16",
+    "quarter": "Quarter-final",
+    "semi": "Semi-final",
+    "third": "Third Place",
+    "final": "Final"
+  },
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "match": {
+    "locked": "Predictions are locked — the match has kicked off!",
+    "lockedHint": "Winners will be announced after the final whistle.",
+    "completed": "Full-time",
+    "noMatches": "No upcoming match yet. Check back soon!",
+    "predictionsCloseAtKickoff": "Predictions close at kickoff"
+  },
+  "form": {
+    "title": "Predict the score",
+    "name": "Your name",
+    "namePlaceholder": "e.g. Mohammed Alali",
+    "phone": "Mobile number",
+    "phonePlaceholder": "05XXXXXXXX",
+    "phoneHint": "Used only to identify your prediction and contact you if you win.",
+    "phoneInvalid": "Please enter a valid Saudi mobile number (05XXXXXXXX).",
+    "nameRequired": "Please enter your name.",
+    "submit": "Submit prediction",
+    "update": "Update prediction",
+    "submitted": "Your prediction is in. Good luck! 🍀",
+    "updated": "Your prediction was updated.",
+    "error": "Something went wrong. Please try again.",
+    "yourPrediction": "Your prediction",
+    "edit": "Edit",
+    "editUntilKickoff": "You can change your prediction until kickoff."
+  },
+  "winners": {
+    "title": "Winners",
+    "subtitle": "Correct predictions for every match — and the lucky wheel prize winner.",
+    "exact": "Exact score",
+    "closest": "Closest prediction",
+    "prizeWinner": "Lucky wheel prize winner",
+    "noWinners": "No winners for this match.",
+    "noCompleted": "No completed matches yet — winners will appear here after the first final whistle.",
+    "winnersCount_one": "{{count}} winner",
+    "winnersCount_other": "{{count}} winners"
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "step1Title": "Scan & predict",
+    "step1Text": "Enter your name, mobile number and your expected final score before kickoff.",
+    "step2Title": "Exact score wins",
+    "step2Text": "Everyone who predicts the exact final score is a winner. If nobody gets it exactly, the closest predictions win.",
+    "step3Title": "Lucky wheel",
+    "step3Text": "After the match, the lucky wheel is spun live among the winners — one of them takes the prize!"
+  },
+  "footer": "Al-Qadsiah Club — World Cup 2026"
+}

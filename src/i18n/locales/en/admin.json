@@ -1,0 +1,103 @@
+{
+  "login": {
+    "title": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "error": "Invalid email or password.",
+    "notAdmin": "This account does not have admin access."
+  },
+  "nav": {
+    "title": "Admin",
+    "viewSite": "View site",
+    "logout": "Sign out"
+  },
+  "stats": {
+    "matches": "Matches",
+    "upcoming": "Upcoming",
+    "completed": "Completed"
+  },
+  "status": {
+    "upcoming": "Upcoming",
+    "locked": "In play",
+    "completed": "Completed"
+  },
+  "matches": {
+    "title": "Matches",
+    "create": "Add match",
+    "edit": "Edit match",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this match and all of its predictions?",
+    "team1": "First team",
+    "team2": "Second team",
+    "teamName": "Name (English)",
+    "teamNameAr": "Name (Arabic)",
+    "teamFlag": "Flag code",
+    "flagHint": "ISO code used by flagcdn.com — e.g. mx, us, fr, gb-eng",
+    "stage": "Stage",
+    "date": "Kickoff date & time",
+    "save": "Save",
+    "cancel": "Cancel",
+    "required": "Please fill in all required fields.",
+    "created": "Match created.",
+    "updated": "Match updated.",
+    "deleted": "Match deleted.",
+    "empty": "No matches yet — add the first Saudi match.",
+    "details": "Details"
+  },
+  "detail": {
+    "back": "Back to matches",
+    "notFound": "Match not found.",
+    "result": "Final result",
+    "enterResult": "Save result & compute winners",
+    "resultSaved": "Result saved — {{count}} winner(s).",
+    "resultWarning": "Re-entering the result recomputes the winners and resets the lucky wheel.",
+    "predictions": "Predictions",
+    "noPredictions": "No predictions yet.",
+    "name": "Name",
+    "phone": "Phone",
+    "prediction": "Prediction",
+    "goalError": "Error",
+    "winner": "Winner",
+    "winners": "Winners",
+    "openWheel": "Open lucky wheel",
+    "wheelNeedsResult": "Enter the result first to unlock the wheel.",
+    "prizeWinner": "Prize winner"
+  },
+  "api": {
+    "import": "Import from API",
+    "title": "World Cup matches — football-data.org",
+    "filterSaudi": "Saudi matches",
+    "filterAll": "All matches",
+    "loading": "Fetching matches…",
+    "empty": "No matches found in the API for this filter.",
+    "error": "Could not fetch from the football API.",
+    "errorRateLimit": "API rate limit hit — wait a minute and try again.",
+    "errorForbidden": "API key invalid, or World Cup data not available on the current plan.",
+    "alreadyAdded": "Added",
+    "add": "Add",
+    "sync": "Sync score from API",
+    "syncNoScore": "No score available from the API yet.",
+    "syncLive": "Match in play — current score loaded. Save after full-time.",
+    "syncFinished": "Full-time score loaded — review and save to confirm.",
+    "syncError": "Failed to fetch the score from the API."
+  },
+  "qr": {
+    "title": "QR code for the venue poster",
+    "url": "Website link",
+    "download": "Download PNG",
+    "hint": "Print this code on the poster — scanning it opens the prediction page."
+  },
+  "wheel": {
+    "spin": "Spin!",
+    "spinning": "Spinning…",
+    "winner": "Winner!",
+    "continue": "Continue",
+    "respin": "Winner not present? Spin again",
+    "respinHint": "Previously drawn names are excluded from the wheel.",
+    "noWinners": "This match has no winners to draw from.",
+    "needsResult": "Enter the match result first.",
+    "saved": "Prize winner saved.",
+    "back": "Back to match"
+  }
+}

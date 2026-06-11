@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function matchData(matchId) {
+      return get(/databases/$(database)/documents/matches/$(matchId)).data;
+    }
+
+    // Predictions stay open until kickoff. The matchDate comparison is the
+    // real server-side lock — no admin action or cron is needed to close a
+    // match at kickoff time.
+    function matchOpen(matchId) {
+      let m = matchData(matchId);
+      return m.status == "upcoming" && m.matchDate > request.time;
+    }
+
+    function validPrediction(data, predId) {
+      return data.matchId is string
+        && predId.split('_')[0] == data.matchId
+        && data.name is string
+        && data.name.size() >= 1 && data.name.size() <= 60
+        && data.phoneMasked is string && data.phoneMasked.size() <= 20
+        && data.predictedScoreHome is int
+        && data.predictedScoreHome >= 0 && data.predictedScoreHome <= 15
+        && data.predictedScoreAway is int
+        && data.predictedScoreAway >= 0 && data.predictedScoreAway <= 15
+        // Winner fields can only be set by the admin (result entry).
+        && data.isWinner == false
+        && data.winnerTier == null
+        && data.goalError == null;
+    }
+
+    match /matches/{matchId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Prediction doc IDs are "{matchId}_{sha256(phone)}" — fetching one by
+    // `get` requires knowing the phone, so a visitor can only look up their
+    // own prediction. Listing is blocked until the match completes (public
+    // winners view) unless the caller is the admin.
+    match /predictions/{predId} {
+      allow get: if true;
+      allow list: if isAdmin()
+        || matchData(resource.data.matchId).status == "completed";
+      allow create: if matchOpen(request.resource.data.matchId)
+        && validPrediction(request.resource.data, predId);
+      allow update: if isAdmin()
+        || (matchOpen(resource.data.matchId)
+            && request.resource.data.matchId == resource.data.matchId
+            && validPrediction(request.resource.data, predId));
+      allow delete: if isAdmin();
+    }
+
+    // Full phone numbers live here, readable only by the admin. Doc ID
+    // mirrors the prediction ID so the two can be joined.
+    match /contacts/{contactId} {
+      allow read: if isAdmin();
+      allow create, update: if matchOpen(request.resource.data.matchId)
+        && contactId.split('_')[0] == request.resource.data.matchId
+        && request.resource.data.phone is string
+        && request.resource.data.phone.size() >= 12
+        && request.resource.data.phone.size() <= 16
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 60;
+      allow delete: if isAdmin();
+    }
+
+    // Membership collection: a doc per admin UID, created manually in the
+    // Firebase console. Nobody can write it from the client.
+    match /admins/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+  }
+}
