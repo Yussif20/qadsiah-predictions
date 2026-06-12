@@ -75,7 +75,9 @@ body::before {
   background: url("/images/app-bg.jpg") center / contain no-repeat;
   mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
-  opacity: 0.22;
+  /* The artwork is already a dark ambient design, so it can sit at a much
+     higher opacity than the white-heavy poster art it replaced. */
+  opacity: 0.45;
   pointer-events: none;
 }
 
