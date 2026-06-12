@@ -1,6 +1,6 @@
 import confetti from "canvas-confetti";
 
-const BRAND_COLORS = ["#F9DF00", "#EE0000", "#FFFFFF"];
+const BRAND_COLORS = ["#45B75A", "#B4D337", "#FFFFFF"];
 
 /** Celebration for the lucky wheel reveal. */
 export function celebrationBurst(): void {

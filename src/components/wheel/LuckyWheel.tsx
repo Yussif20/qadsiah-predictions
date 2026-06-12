@@ -23,8 +23,8 @@ interface LuckyWheelProps {
 }
 
 // Cycle of 4 so neighbours always differ
-const SEGMENT_FILLS = ["#F9DF00", "#1D1810", "#EE0000", "#2A2310"];
-const TEXT_FILLS = ["#181400", "#F9DF00", "#FFFFFF", "#F9DF00"];
+const SEGMENT_FILLS = ["#45B75A", "#0A2A1F", "#B4D337", "#0B5332"];
+const TEXT_FILLS = ["#04150F", "#45B75A", "#1A2405", "#FFFFFF"];
 
 const CX = 200;
 const CY = 200;
@@ -77,13 +77,13 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
     <div className={className}>
       <div className="relative mx-auto aspect-square w-full max-w-[min(80vw,520px)]">
         {/* Projector spotlight glow behind the wheel */}
-        <div className="pointer-events-none absolute -inset-10 rounded-full bg-[radial-gradient(circle,rgba(249,223,0,0.14),transparent_65%)]" />
+        <div className="pointer-events-none absolute -inset-10 rounded-full bg-[radial-gradient(circle,rgba(69,183,90,0.16),transparent_65%)]" />
 
         {/* Pointer — wobble lives on the inner svg so it never fights the
             wrapper's centering translate */}
         <div className="absolute -top-2 left-1/2 z-10 w-10 -translate-x-1/2 drop-shadow-lg">
           <svg viewBox="0 0 40 40" className="pointer-bob w-full">
-            <path d="M20 38 L4 6 L36 6 Z" fill="#EE0000" stroke="#FFFFFF" strokeWidth="3" />
+            <path d="M20 38 L4 6 L36 6 Z" fill="#B4D337" stroke="#FFFFFF" strokeWidth="3" />
           </svg>
         </div>
 
@@ -101,7 +101,7 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
           }}
         >
           <svg viewBox="0 0 400 400" className="size-full drop-shadow-2xl">
-            <circle cx={CX} cy={CY} r={R + 8} fill="#0B0905" stroke="#F9DF00" strokeWidth="7" />
+            <circle cx={CX} cy={CY} r={R + 8} fill="#04120F" stroke="#45B75A" strokeWidth="7" />
             {/* Carnival rim bulbs — children of the rotating group, so they
                 orbit during the spin; opacity blink never touches transforms */}
             {Array.from({ length: 16 }, (_, i) => {
@@ -112,14 +112,14 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
                   cx={bx}
                   cy={by}
                   r="4"
-                  fill="#FBF7EA"
+                  fill="#EFFAF3"
                   className="wheel-bulb"
                   style={{ animationDelay: `${i * 0.12}s` }}
                 />
               );
             })}
             {n === 0 ? (
-              <circle cx={CX} cy={CY} r={R} fill="#1D1810" />
+              <circle cx={CX} cy={CY} r={R} fill="#0A2A1F" />
             ) : n === 1 ? (
               <circle cx={CX} cy={CY} r={R} fill={SEGMENT_FILLS[0]} />
             ) : (
@@ -128,7 +128,7 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
                   key={entry.id}
                   d={segmentPath(i * seg, (i + 1) * seg)}
                   fill={SEGMENT_FILLS[i % SEGMENT_FILLS.length]}
-                  stroke="#0B0905"
+                  stroke="#04120F"
                   strokeWidth="1.5"
                 />
               ))
@@ -153,9 +153,9 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
                 </text>
               );
             })}
-            <circle cx={CX} cy={CY} r="26" fill="#0B0905" stroke="#F9DF00" strokeWidth="5" />
-            {/* Knight emblem hub — 36px square fits inside the r=26 circle */}
-            <image href="/images/emblem.png" x={CX - 18} y={CY - 18} width="36" height="36" />
+            <circle cx={CX} cy={CY} r="26" fill="#04120F" stroke="#45B75A" strokeWidth="5" />
+            {/* WE ARE 26 logo hub — 36px square fits inside the r=26 circle */}
+            <image href="/images/logo.png" x={CX - 18} y={CY - 18} width="36" height="36" />
           </svg>
         </div>
       </div>

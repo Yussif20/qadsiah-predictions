@@ -19,15 +19,13 @@ export function PublicLayout() {
     <div className="flex min-h-screen flex-col">
       <header className="glass sticky top-0 z-40">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-2 px-4">
-          <Link to="/" className="flex items-center gap-2.5">
+          {/* Brand is logos-only: the WE ARE 26 mark and the club crest frame the nav */}
+          <Link to="/" className="shrink-0">
             <img
-              src="/images/emblem.png"
-              alt=""
+              src="/images/logo.png"
+              alt="WE ARE 26"
               className="size-9 rounded-lg ring-1 ring-primary/30"
             />
-            <span className="text-gradient-gold text-base font-extrabold sm:text-lg">
-              {t("appName")}
-            </span>
           </Link>
           <nav className="flex items-center gap-1">
             <NavLink to="/" end className={navLinkClass}>
@@ -49,6 +47,9 @@ export function PublicLayout() {
               <Shield className="size-3.5" />
             </Link>
           </nav>
+          <Link to="/" className="shrink-0">
+            <img src="/images/club-crest.png" alt={t("appTagline")} className="h-8 w-auto" />
+          </Link>
         </div>
         <div className="divider-glow" />
       </header>
@@ -59,7 +60,7 @@ export function PublicLayout() {
 
       <footer className="pb-8 pt-2 text-center text-xs text-muted-foreground">
         <div className="divider-glow mx-auto mb-5 max-w-3xl px-4" />
-        <img src="/images/emblem.png" alt="" className="mx-auto mb-2 size-7 rounded opacity-50" />
+        <img src="/images/club-crest.png" alt="" className="mx-auto mb-2 h-7 w-auto opacity-50" />
         {t("footer")}
       </footer>
     </div>

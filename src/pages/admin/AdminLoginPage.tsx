@@ -38,14 +38,14 @@ export function AdminLoginPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center p-4">
-      {/* Faint knight watermark behind the form */}
-      <div className="pointer-events-none fixed inset-0 bg-[url(/images/emblem.png)] bg-[length:50vmin] bg-center bg-no-repeat opacity-[0.04]" />
+      {/* Faint club-crest watermark behind the form */}
+      <div className="pointer-events-none fixed inset-0 bg-[url(/images/club-crest.png)] bg-[length:auto_50vmin] bg-center bg-no-repeat opacity-[0.04]" />
       <form
         onSubmit={onSubmit}
         className="rise-in card-elevated relative w-full max-w-sm space-y-4 rounded-xl p-8"
       >
         <div className="text-center">
-          <img src="/images/emblem.png" alt="" className="mx-auto mb-3 size-16 rounded-xl" />
+          <img src="/images/logo.png" alt="" className="mx-auto mb-3 size-16 rounded-xl" />
           <h1 className="text-xl font-extrabold">{t("login.title")}</h1>
         </div>
         <div>

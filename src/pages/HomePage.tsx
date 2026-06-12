@@ -29,18 +29,15 @@ export function HomePage() {
       <div className="rise-in relative overflow-hidden rounded-xl border">
         <img src="/images/hero.jpg" alt="" className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/80" />
-        <img
-          src="/images/emblem.png"
-          alt=""
-          className="pointer-events-none absolute top-3 start-0 end-0 mx-auto w-24 opacity-15"
-        />
-        <div className="relative px-4 pb-28 pt-12 text-center sm:pb-32 sm:pt-14">
-          <h1 className="text-gradient-gold text-4xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-5xl">
-            {t("appName")}
-          </h1>
-          <p className="mt-1 text-sm font-semibold text-foreground/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+        <div className="relative px-4 pb-28 pt-10 text-center sm:pb-32 sm:pt-12">
+          <img
+            src="/images/logo.png"
+            alt="WE ARE 26"
+            className="mx-auto mb-4 w-24 rounded-2xl shadow-2xl ring-1 ring-white/20 sm:w-28"
+          />
+          <h1 className="text-gradient-brand text-2xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-3xl">
             {t("appTagline")}
-          </p>
+          </h1>
         </div>
       </div>
 

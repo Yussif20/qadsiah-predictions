@@ -22,7 +22,7 @@ export function MatchWinnersCard({ match, featured = false }: MatchWinnersCardPr
     <article
       className={cn(
         "relative overflow-hidden rounded-xl p-5",
-        featured ? "card-gold" : "card-elevated"
+        featured ? "card-brand" : "card-elevated"
       )}
     >
       {featured && (
@@ -61,7 +61,7 @@ export function MatchWinnersCard({ match, featured = false }: MatchWinnersCardPr
 
         {/* Prize winner */}
         {match.prizeWinner && (
-          <div className="winner-glow card-gold mb-4 flex items-center gap-3 rounded-lg p-4">
+          <div className="winner-glow card-brand mb-4 flex items-center gap-3 rounded-lg p-4">
             <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-primary/30 to-primary/5 ring-1 ring-primary/40">
               <Gift className="size-6 text-primary" />
             </span>

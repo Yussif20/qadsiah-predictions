@@ -119,7 +119,7 @@ export function WheelPage() {
       ) : (
         <>
           <div className="text-center">
-            <h1 className="text-gradient-gold text-4xl font-black sm:text-5xl">{matchTitle}</h1>
+            <h1 className="text-gradient-brand text-4xl font-black sm:text-5xl">{matchTitle}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {t("common:winners.prizeWinner")}
             </p>
@@ -172,11 +172,11 @@ export function WheelPage() {
       {revealedWinner && (
         <div className="fade-in fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-black/85 p-6 backdrop-blur-sm">
           <p className="text-2xl font-bold text-muted-foreground">{t("wheel.winner")}</p>
-          <div className="reveal-pop winner-glow card-gold rounded-3xl px-10 py-12 text-center sm:px-20">
+          <div className="reveal-pop winner-glow card-brand rounded-3xl px-10 py-12 text-center sm:px-20">
             <span className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-gradient-to-b from-primary/30 to-primary/5 ring-1 ring-primary/40">
               <Gift className="size-8 text-primary" />
             </span>
-            <p className="text-gradient-gold text-5xl font-black sm:text-7xl">
+            <p className="text-gradient-brand text-5xl font-black sm:text-7xl">
               {revealedWinner.name}
             </p>
             <p className="mt-3 text-lg text-muted-foreground" dir="ltr">

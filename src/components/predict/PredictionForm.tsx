@@ -76,7 +76,7 @@ export function PredictionForm({ match, open }: PredictionFormProps) {
   // Existing prediction summary (and the only view once the match kicked off)
   if (prediction && !editing) {
     return (
-      <section className="card-gold rounded-xl p-5 text-center">
+      <section className="card-brand rounded-xl p-5 text-center">
         <h3 className="mb-1 flex items-center justify-center gap-1.5 text-sm font-bold text-muted-foreground">
           <CheckCircle2 className="size-4 text-success" />
           {t("form.yourPrediction")}

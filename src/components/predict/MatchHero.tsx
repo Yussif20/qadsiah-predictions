@@ -21,7 +21,7 @@ export function MatchHero({ match }: { match: Match }) {
   const completed = match.status === "completed";
 
   return (
-    <section className="card-gold rounded-xl p-5 sm:p-6">
+    <section className="card-brand rounded-xl p-5 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
         <span className="rounded-full bg-gradient-to-b from-primary/25 to-primary/5 px-3 py-1 font-bold text-primary ring-1 ring-primary/30">
           {t(STAGE_LABEL_KEYS[match.stage])}
@@ -43,7 +43,7 @@ export function MatchHero({ match }: { match: Match }) {
           ) : (
             /* Split-brand diamond. The label inherits Cairo — Arabic "ضد"
                must never go through font-display (no Arabic glyphs). */
-            <div className="mx-2 flex size-12 rotate-45 items-center justify-center rounded-lg bg-[linear-gradient(135deg,#F9DF00_50%,#EE0000_50%)] p-[3px] shadow-[0_0_20px_rgba(249,223,0,0.35)]">
+            <div className="mx-2 flex size-12 rotate-45 items-center justify-center rounded-lg bg-[linear-gradient(135deg,#45B75A_50%,#B4D337_50%)] p-[3px] shadow-[0_0_20px_rgba(69,183,90,0.35)]">
               <div className="flex size-full items-center justify-center rounded-md bg-background">
                 <span className="-rotate-45 text-sm font-black text-primary">{t("vs")}</span>
               </div>

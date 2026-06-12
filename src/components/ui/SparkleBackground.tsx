@@ -2,22 +2,22 @@
  * Full-page floating sparkle background.
  *
  * A fixed, viewport-filling <canvas> behind all app content (mounted once in
- * App). Draws twinkling warm-gold stars, slow-drifting golden orbs and a
- * steady stream of rising particles (mostly gold with the occasional red
- * spark — the Al-Qadsiah palette) over the dark page backdrop.
+ * App). Draws twinkling mint stars, slow-drifting green orbs and a steady
+ * stream of rising particles (mostly green with the occasional lime spark —
+ * the World Cup 2026 club palette) over the dark page backdrop.
  *
  * Pauses while the tab is hidden so it doesn't burn CPU in the background,
  * and skips entirely under `prefers-reduced-motion`.
  *
  * Ported from reda-predictions' SparkleBackground, re-coloured from blue/red
- * to gold/red.
+ * to green/lime.
  */
 
 import { useEffect, useRef } from "react";
 
-// Qadsiah palette, as "R, G, B" triplets for rgba() interpolation.
-const GOLD_RGB = "249, 223, 0"; // --color-primary
-const RED_RGB = "238, 0, 0"; // --color-accent
+// World Cup club palette, as "R, G, B" triplets for rgba() interpolation.
+const GREEN_RGB = "69, 183, 90"; // --color-primary
+const LIME_RGB = "180, 211, 55"; // --color-accent
 
 export default function SparkleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,7 +78,7 @@ export default function SparkleBackground() {
       r: number;
       life: number;
       maxLife: number;
-      red: boolean; // true → red spark, false → gold
+      lime: boolean; // true → lime spark, false → green
     }
 
     const stars: Star[] = [];
@@ -127,7 +127,7 @@ export default function SparkleBackground() {
 
     /** Spawn a rising particle. `fromBottom` true → starts just below the
      *  viewport edge. false → starts at a random Y so motion shows up across
-     *  the full height immediately. ~20% are red sparks. */
+     *  the full height immediately. ~20% are lime sparks. */
     const spawnParticle = (fromBottom = false) => {
       particles.push({
         x: Math.random() * vw,
@@ -138,7 +138,7 @@ export default function SparkleBackground() {
         r: Math.random() * 1.4 + 0.5,
         life: 0,
         maxLife: 220 + Math.random() * 180,
-        red: Math.random() < 0.2,
+        lime: Math.random() < 0.2,
       });
     };
 
@@ -162,7 +162,7 @@ export default function SparkleBackground() {
       frame++;
       ctx.clearRect(0, 0, vw, vh);
 
-      // Slow-drifting golden orbs
+      // Slow-drifting green orbs
       for (let i = 0; i < orbs.length; i++) {
         const o = orbs[i];
         o.x += o.vx;
@@ -172,8 +172,8 @@ export default function SparkleBackground() {
         if (o.y < -o.r) o.y = vh + o.r;
         if (o.y > vh + o.r) o.y = -o.r;
         const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
-        g.addColorStop(0, `rgba(${GOLD_RGB},${o.alpha})`);
-        g.addColorStop(0.5, `rgba(${GOLD_RGB},${o.alpha * 0.4})`);
+        g.addColorStop(0, `rgba(${GREEN_RGB},${o.alpha})`);
+        g.addColorStop(0.5, `rgba(${GREEN_RGB},${o.alpha * 0.4})`);
         g.addColorStop(1, "transparent");
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -193,12 +193,12 @@ export default function SparkleBackground() {
         const alpha = 0.25 + 0.75 * Math.abs(Math.sin(s.twinkle));
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,243,196,${alpha * 0.7})`;
+        ctx.fillStyle = `rgba(213,243,224,${alpha * 0.7})`;
         ctx.fill();
       }
 
-      // Rising particles — mostly gold, ~20% red. Spawned at random Y for ~70%
-      // of spawns so motion is distributed across the whole viewport.
+      // Rising particles — mostly green, ~20% lime. Spawned at random Y for
+      // ~70% of spawns so motion is distributed across the whole viewport.
       if (frame % 5 === 0) spawnParticle(Math.random() < 0.3);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
@@ -213,8 +213,8 @@ export default function SparkleBackground() {
             : progress > 0.65
               ? (1 - (progress - 0.65) / 0.35) * 0.7
               : 0.7;
-        const col = p.red ? RED_RGB : GOLD_RGB;
-        const core = p.red ? "255,210,210" : "255,247,190";
+        const col = p.lime ? LIME_RGB : GREEN_RGB;
+        const core = p.lime ? "240,250,200" : "216,246,226";
         const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
         glow.addColorStop(0, `rgba(${col},${p.alpha * 0.6})`);
         glow.addColorStop(0.4, `rgba(${col},${p.alpha * 0.2})`);

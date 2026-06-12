@@ -22,7 +22,7 @@ export function WinnersPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/85" />
         <div className="relative px-4 py-12 text-center sm:py-14">
-          <h1 className="text-gradient-gold text-3xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-4xl">
+          <h1 className="text-gradient-brand text-3xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-4xl">
             {t("winners.title")}
           </h1>
           <p className="mx-auto mt-1 max-w-md text-sm font-semibold text-foreground/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">

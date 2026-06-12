@@ -1,6 +1,6 @@
 # Qadsiah Predictions — World Cup 2026
 
-**Public brand name:** فارس المونديال / "Mondial Knight" (the knight is Al-Qadsiah's emblem; each match's lucky-wheel winner is that round's Knight). The repo/project name stays `qadsiah-predictions`.
+**Branding:** logos only, no brand-name text — the official "WE ARE 26" tournament mark (`public/images/logo.png`) plus the white club crest extracted from the official backdrop (`public/images/club-crest.png`). The former فارس المونديال / "Mondial Knight" name and knight emblem were dropped (June 2026) and must not reappear in UI copy; page titles use "نادي القادسية — كأس العالم 2026". The repo/project name stays `qadsiah-predictions`.
 
 A public, QR-code-driven score prediction site for Al-Qadsiah FC. Employees watching Saudi national team matches at the club venue scan a poster QR, enter **name + phone** (no account), and predict the exact score. After the match, exact-score predictors (or the closest, when nobody is exact) become winners, and a **lucky wheel** is spun live on the venue projector to pick the prize winner.
 
@@ -45,7 +45,7 @@ npm run test:watch  # Vitest watch
 
 ## Brand / Theme
 
-Al-Qadsiah colors, verified from the official logo SVGs: **yellow `#F9DF00`** (primary) and **red `#EE0000`** (accent), on a warm near-black background. Dark-only UI (class `dark` hardcoded on `<html>`). Fonts match reda-predictions: **Space Grotesk** for Latin (`--font-sans`), **Cairo** for Arabic (`--font-arabic`, applied via a `[dir="rtl"] body` rule), **Bebas Neue** for big score digits (`--font-display`). Theme tokens live in `src/index.css` under `@theme`.
+World Cup 2026 club palette, sampled from the official backdrop artwork the client provided (June 2026 — replaced the original yellow/red club colors): **bright green `#45B75A`** (primary) and **lime `#B4D337`** (accent), with deep teal `#0B4C40` / flag green `#0B5332` as artwork surfaces, on a green near-black background. Gold stays as an artwork-only accent (the trophy). Dark-only UI (class `dark` hardcoded on `<html>`). Fonts match reda-predictions: **Space Grotesk** for Latin (`--font-sans`), **Cairo** for Arabic (`--font-arabic`, applied via a `[dir="rtl"] body` rule), **Bebas Neue** for big score digits (`--font-display`). Theme tokens live in `src/index.css` under `@theme`.
 
 ---
 

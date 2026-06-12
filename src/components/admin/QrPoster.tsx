@@ -8,8 +8,8 @@ import { Spinner } from "@/components/ui/Spinner";
 
 // Poster copy is always Arabic — it hangs in the venue for the employees,
 // regardless of which language the admin uses in the panel.
-const POSTER_TITLE = "فارس المونديال";
-const POSTER_SUBTITLE = "نادي القادسية — كأس العالم 2026";
+const POSTER_TITLE = "نادي القادسية";
+const POSTER_SUBTITLE = "كأس العالم 2026";
 const POSTER_CTA = "امسح الرمز وتوقّع النتيجة واربح الجائزة";
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -45,7 +45,7 @@ async function composePoster(url: string): Promise<string> {
     QRCode.toDataURL(url, {
       width: 520,
       margin: 1,
-      color: { dark: "#0B0905", light: "#FFFFFF" },
+      color: { dark: "#04120F", light: "#FFFFFF" },
     }).then(loadImage),
   ]);
   // Make sure Cairo is ready before drawing Arabic on the canvas.
@@ -70,12 +70,12 @@ async function composePoster(url: string): Promise<string> {
   ctx.drawImage(bg, 0, 0, W, H);
   ctx.textAlign = "center";
 
-  // Headline in the dark tunnel-ceiling area
+  // Headline in the plain deep-green band above the artwork
   ctx.save();
   ctx.shadowColor = "rgba(0,0,0,0.85)";
   ctx.shadowBlur = 18;
   ctx.shadowOffsetY = 4;
-  ctx.fillStyle = "#F9DF00";
+  ctx.fillStyle = "#B4D337";
   ctx.font = "900 96px Cairo, sans-serif";
   ctx.fillText(POSTER_TITLE, W / 2, 170);
   ctx.fillStyle = "#FFFFFF";
@@ -83,24 +83,24 @@ async function composePoster(url: string): Promise<string> {
   ctx.fillText(POSTER_SUBTITLE, W / 2, 237);
   ctx.restore();
 
-  // Call to action above the QR card, in the dark lower third
+  // Call to action above the QR card, in the deep-green lower third
   ctx.save();
   ctx.shadowColor = "rgba(0,0,0,0.9)";
   ctx.shadowBlur = 14;
   ctx.shadowOffsetY = 3;
-  ctx.fillStyle = "#F9DF00";
+  ctx.fillStyle = "#B4D337";
   ctx.font = "800 52px Cairo, sans-serif";
   ctx.fillText(POSTER_CTA, W / 2, 1232);
   ctx.restore();
 
-  // White QR card with a soft golden glow
+  // White QR card with a soft green glow
   const qrSize = 380;
   const pad = 26;
   const boxW = qrSize + pad * 2;
   const boxX = (W - boxW) / 2;
   const boxY = 1268;
   ctx.save();
-  ctx.shadowColor = "rgba(249,223,0,0.4)";
+  ctx.shadowColor = "rgba(69,183,90,0.45)";
   ctx.shadowBlur = 44;
   ctx.fillStyle = "#FFFFFF";
   roundedRect(ctx, boxX, boxY, boxW, boxW, 28);
@@ -133,7 +133,7 @@ export function QrPoster() {
       ? QRCode.toDataURL(trimmed, {
           width: 600,
           margin: 2,
-          color: { dark: "#0B0905", light: "#FFFFFF" },
+          color: { dark: "#04120F", light: "#FFFFFF" },
         }).catch(() => null)
       : Promise.resolve(null);
     generated.then((d) => {
@@ -192,7 +192,7 @@ export function QrPoster() {
           <img
             src={dataUrl}
             alt="QR"
-            className="w-40 rounded-lg border bg-white p-2 shadow-[0_0_24px_rgba(249,223,0,0.15)]"
+            className="w-40 rounded-lg border bg-white p-2 shadow-[0_0_24px_rgba(69,183,90,0.15)]"
           />
         )}
       </div>

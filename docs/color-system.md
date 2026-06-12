@@ -1,32 +1,34 @@
-# فارس المونديال — Color System
+# Qadsiah Predictions — Color System
 
 Source of truth: `src/index.css` (`@theme` block + utility classes). Dark-only theme.
-Brand yellow/red verified from Al-Qadsiah FC's official logo SVGs.
+Palette sampled from the club's official World Cup 2026 backdrop artwork
+(`public/images/app-bg.jpg`); gold remains an artwork-only accent (the trophy).
 
 ## Brand core
 | Token | Hex | Role |
 |---|---|---|
-| primary | #F9DF00 | Club yellow — CTAs, highlights, digits, focus ring |
-| accent | #EE0000 | Club red — event actions, wheel pointer, urgency |
-| gold-deep | #C9B400 | Darker gold — bottom stops of gradients |
+| primary | #45B75A | Bright green — CTAs, highlights, digits, focus ring |
+| accent | #B4D337 | Lime — event actions, wheel pointer, urgency |
+| primary-deep | #2E8C44 | Darker green — bottom stops of gradients |
+| (artwork) | #0B4C40 / #0B5332 | Deep teal + flag green — backdrop/poster surfaces |
 
 ## Surfaces
 | Token | Hex | Role |
 |---|---|---|
-| background | #0B0905 | Page base (warm near-black) |
-| card | #161208 | Card / popover fill |
-| secondary / muted | #241E0F | Inset surfaces, chips, inputs |
-| border / input | #332B16 | Hairlines, input borders |
-| glass | rgba(22,18,8,0.75) + blur(16px) | Sticky headers |
-| body backdrop | radial #3D3406 → #241E06 → #120E04 → #0B0905 | Golden top glow |
+| background | #04120F | Page base (green near-black) |
+| card | #0A1F18 | Card / popover fill |
+| secondary / muted | #11332A | Inset surfaces, chips, inputs |
+| border / input | #1B3D33 | Hairlines, input borders |
+| glass | rgba(10,31,24,0.75) + blur(16px) | Sticky headers |
+| body backdrop | radial #11604E → #0A3C31 → #051F19 → #04120F | Green top glow |
 
 ## Text
 | Token | Hex | Role |
 |---|---|---|
-| foreground | #FBF7EA | Primary text (warm off-white) |
-| muted-foreground | #B0A788 | Secondary text, hints, dates |
-| primary-foreground | #181400 | Dark text on yellow |
-| accent-foreground | #FFFFFF | Text on red |
+| foreground | #EFFAF3 | Primary text (mint off-white) |
+| muted-foreground | #9CBFAF | Secondary text, hints, dates |
+| primary-foreground | #04150F | Dark text on bright green |
+| accent-foreground | #1A2405 | Dark text on lime |
 
 ## Semantic
 | Token | Hex | Used for |
@@ -39,12 +41,12 @@ Brand yellow/red verified from Al-Qadsiah FC's official logo SVGs.
 ## Signature gradients
 | Where | Stops |
 |---|---|
-| btn-cta | #FFEB3D → #F9DF00 (55%) → #C9B400; glow rgba(249,223,0,.30) |
-| btn-cta-accent | #FF4D4D → #EE0000 (55%) → #A30000 |
-| text-gradient-gold | #FFF7B0 → #F9DF00 (60%) → #C9B400 |
-| card-elevated border | 165deg rgba(249,223,0,.28) → rgba(51,43,22,.6) → rgba(238,0,0,.14) |
-| card-gold border | 165deg rgba(249,223,0,.65) → rgba(201,180,0,.25) → rgba(51,43,22,.7) → rgba(238,0,0,.35) |
-| wheel segments | #F9DF00, #1D1810, #EE0000, #2A2310 (text: #181400 / #F9DF00 / #FFFFFF) |
+| btn-cta | #6FD584 → #45B75A (55%) → #2E8C44; glow rgba(69,183,90,.30) |
+| btn-cta-accent | #C8E156 → #B4D337 (55%) → #87A622 |
+| text-gradient-brand | #C8F0D2 → #45B75A (60%) → #2E8C44 |
+| card-elevated border | 165deg rgba(69,183,90,.28) → rgba(27,61,51,.6) → rgba(180,211,55,.14) |
+| card-brand border | 165deg rgba(69,183,90,.65) → rgba(46,140,68,.25) → rgba(27,61,51,.7) → rgba(180,211,55,.35) |
+| wheel segments | #45B75A, #0A2A1F, #B4D337, #0B5332 (text: #04150F / #45B75A / #1A2405 / #FFFFFF) |
 
 ## Fonts
 Cairo (Arabic, RTL default) · Space Grotesk (Latin) · Bebas Neue (digits only — no Arabic glyphs)
