@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Shield, Trophy, Volleyball } from "lucide-react";
@@ -15,10 +16,21 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 export function PublicLayout() {
   const { t } = useTranslation();
 
+  // Flag public routes so the global backdrop (body::before) can switch to the
+  // left-half image panel on desktop; admin and the wheel keep the full-bleed
+  // backdrop. Cleared on unmount when navigating into the admin area.
+  useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute("data-route", "public");
+    return () => html.removeAttribute("data-route");
+  }, []);
+
   return (
+    // Header and footer are full-width bands; only <main> is offset into the
+    // right half on desktop (lg:ml-[50%]), opposite the left-half artwork panel.
     <div className="flex min-h-screen flex-col">
       <header className="glass sticky top-0 z-40">
-        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between gap-2 px-4">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:px-6">
           {/* Brand is logos-only: the WE ARE 26 mark and the club crest frame the nav */}
           <Link to="/" className="shrink-0">
             <img
@@ -54,15 +66,13 @@ export function PublicLayout() {
         <div className="divider-glow" />
       </header>
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
-        <Outlet />
+      {/* Offset into the right half on desktop; full width below lg. The inner
+          column keeps the readable max-width, centered within its half. */}
+      <main className="flex-1 px-4 py-8 lg:ml-[50%]">
+        <div className="mx-auto w-full max-w-3xl">
+          <Outlet />
+        </div>
       </main>
-
-      <footer className="pb-8 pt-2 text-center text-xs text-muted-foreground">
-        <div className="divider-glow mx-auto mb-5 max-w-3xl px-4" />
-        <img src="/images/club-crest.png" alt="" className="mx-auto mb-2 h-7 w-auto opacity-50" />
-        {t("footer")}
-      </footer>
     </div>
   );
 }

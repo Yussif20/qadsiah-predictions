@@ -4,26 +4,29 @@
 
 @theme {
   /* World Cup 2026 club palette, sampled from the official backdrop artwork:
-     deep teal #0B4C40, bright green #45B75A, lime #B4D337, flag green #0B5332,
-     on a green-tinted near-black. Gold stays as artwork accent (the trophy). */
-  --color-background: #04120F;
+     bright green #45B75A, lime #B4D337, flag green #0B5332. The whole-screen
+     base is now the artwork's deep teal (#0C4D41), so the neutral surfaces
+     below are tinted into the same teal family — cards sit a step darker than
+     the base, borders a step lighter — instead of the old near-black ramp.
+     Gold stays as artwork accent (the trophy). */
+  --color-background: #0A4338;
   --color-foreground: #EFFAF3;
-  --color-card: #0A1F18;
+  --color-card: #0B362C;
   --color-card-foreground: #EFFAF3;
-  --color-popover: #0A1F18;
+  --color-popover: #0B362C;
   --color-popover-foreground: #EFFAF3;
   --color-primary: #45B75A;
   --color-primary-foreground: #04150F;
-  --color-secondary: #11332A;
+  --color-secondary: #103E33;
   --color-secondary-foreground: #EFFAF3;
-  --color-muted: #11332A;
-  --color-muted-foreground: #9CBFAF;
+  --color-muted: #103E33;
+  --color-muted-foreground: #A6C9BA;
   --color-accent: #B4D337;
   --color-accent-foreground: #1A2405;
   --color-destructive: #EF4444;
   --color-destructive-foreground: #FFFFFF;
-  --color-border: #1B3D33;
-  --color-input: #1B3D33;
+  --color-border: #1F5648;
+  --color-input: #1F5648;
   --color-ring: #45B75A;
   --color-success: #22C55E;
   --color-success-foreground: #FFFFFF;
@@ -51,7 +54,10 @@
 }
 
 body {
-  background: radial-gradient(ellipse 120% 80% at 50% -20%, #11604e 0%, #0a3c31 28%, #051f19 55%, #04120f 100%);
+  /* The artwork's deep-teal field (#0C4D41), now the whole-screen base color —
+     a subtle radial keeps depth (a touch brighter up top, deeper at the edges)
+     while staying in teal range so the page reads like the image panel. */
+  background: radial-gradient(ellipse 120% 90% at 50% -10%, #11604e 0%, #0c4d41 52%, #093f35 100%);
   background-attachment: fixed;
   min-height: 100vh;
   color: var(--color-foreground);
@@ -69,16 +75,39 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -10;
-  /* contain, never cover: the artwork is square (1080x1080) and cover-cropping
-     it on wide screens zooms into a blurry band. Full image, centered, with the
-     body gradient filling the sides; soft mask melts its edges into the dark. */
-  background: url("/images/app-bg.jpg") center / contain no-repeat;
+  /* Full-bleed width: the square artwork is scaled to the full viewport width
+     (height follows proportionally), so it spans edge to edge on every device.
+     On portrait screens this leaves the top/bottom to the body gradient; cover
+     is avoided because it would crop the trophy and flag off the sides on
+     mobile. The soft mask melts the remaining edges into the dark. */
+  background: url("/images/app-bg.jpg") center / 100% auto no-repeat;
   mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, black 55%, transparent 100%);
-  /* The artwork is already a dark ambient design, so it can sit at a much
-     higher opacity than the white-heavy poster art it replaced. */
-  opacity: 0.45;
+  /* The official "WE ARE 26" backdrop (page 1 of the client artwork) is
+     white-heavy — the big white "26" and the gold trophy — so it sits at a
+     lower opacity than a dark ambient design would, letting the dark gradient
+     above keep foreground text legible. */
+  opacity: 0.42;
   pointer-events: none;
+}
+
+/* ── Desktop split layout (public pages only) ──────────────
+   On wide screens the QR-target pages (predict + winners) put the official
+   backdrop in the LEFT half as a prominent image panel and the page content
+   in the right half. PublicLayout sets data-route="public" while mounted, so
+   admin and the projector wheel keep the full-bleed backdrop above. Below the
+   lg breakpoint the backdrop stays full-bleed for every page. */
+@media (min-width: 1024px) {
+  html[data-route="public"] body::before {
+    /* left half, starting just below the full-width header (h-16 = 4rem) so the
+       header stays a clean band spanning both halves (top right bottom left) */
+    inset: 4rem 50% 0 0;
+    background-size: cover; /* fill the panel rather than letterbox it */
+    opacity: 0.9; /* a real image panel here, not a faint wash */
+    /* solid panel that dissolves at the seam into the content half */
+    mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+  }
 }
 
 [dir="rtl"] body {
@@ -108,7 +137,7 @@ button {
 
 /* ── Glass header / cards ──────────────────────────────── */
 .glass {
-  background: rgba(10, 31, 24, 0.75);
+  background: rgba(9, 48, 40, 0.72);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
 }
@@ -310,8 +339,8 @@ button {
     linear-gradient(
         165deg,
         rgba(69, 183, 90, 0.28),
-        rgba(27, 61, 51, 0.6) 35%,
-        rgba(27, 61, 51, 0.6) 70%,
+        rgba(31, 86, 72, 0.6) 35%,
+        rgba(31, 86, 72, 0.6) 70%,
         rgba(180, 211, 55, 0.14)
       )
       border-box;
@@ -327,7 +356,7 @@ button {
         165deg,
         rgba(69, 183, 90, 0.65),
         rgba(46, 140, 68, 0.25) 40%,
-        rgba(27, 61, 51, 0.7) 70%,
+        rgba(31, 86, 72, 0.7) 70%,
         rgba(180, 211, 55, 0.35)
       )
       border-box;
