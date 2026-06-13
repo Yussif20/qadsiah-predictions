@@ -48,6 +48,10 @@ function involvesSaudi(fd: FdMatch): boolean {
   return isSaudiTeam(fd.homeTeam.name) || isSaudiTeam(fd.awayTeam.name);
 }
 
+function isUpcoming(fd: FdMatch): boolean {
+  return fd.status === "SCHEDULED" || fd.status === "TIMED";
+}
+
 export function ApiImportModal({ existingApiIds, onPick, onClose }: ApiImportModalProps) {
   const { t, i18n } = useTranslation("admin");
 
@@ -76,7 +80,9 @@ export function ApiImportModal({ existingApiIds, onPick, onClose }: ApiImportMod
         ? t("api.errorForbidden")
         : t("api.error");
 
-  const shown = (matches ?? []).filter((fd) => !saudiOnly || involvesSaudi(fd));
+  const shown = (matches ?? []).filter(
+    (fd) => isUpcoming(fd) && (!saudiOnly || involvesSaudi(fd))
+  );
 
   return (
     <div className="fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
