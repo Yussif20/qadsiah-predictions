@@ -30,33 +30,30 @@ describe("computeWinners", () => {
       actual
     );
     expect(result.tier).toBe("exact");
-    expect(result.minError).toBe(0);
     expect(result.winnerIds).toEqual(new Set(["a", "c"]));
   });
 
-  it("falls back to closest when nobody is exact", () => {
+  it("has no winners when nobody is exact", () => {
     const result = computeWinners(
       [pred("a", 0, 0), pred("b", 1, 1), pred("c", 3, 3)],
       actual
     );
-    expect(result.tier).toBe("closest");
-    expect(result.minError).toBe(1);
-    expect(result.winnerIds).toEqual(new Set(["b"]));
+    expect(result.tier).toBeNull();
+    expect(result.winnerIds.size).toBe(0);
   });
 
-  it("includes everyone tied at the smallest error", () => {
+  it("excludes near-misses even when someone is exact", () => {
     const result = computeWinners(
-      [pred("a", 1, 1), pred("b", 3, 1), pred("c", 0, 0)],
+      [pred("a", 2, 1), pred("b", 2, 0), pred("c", 1, 1)],
       actual
     );
-    expect(result.tier).toBe("closest");
-    expect(result.winnerIds).toEqual(new Set(["a", "b"]));
+    expect(result.tier).toBe("exact");
+    expect(result.winnerIds).toEqual(new Set(["a"]));
   });
 
   it("handles no predictions", () => {
     const result = computeWinners([], actual);
     expect(result.tier).toBeNull();
-    expect(result.minError).toBeNull();
     expect(result.winnerIds.size).toBe(0);
   });
 

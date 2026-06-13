@@ -2,7 +2,7 @@
 
 **Branding:** logos only, no brand-name text — the official "WE ARE 26" tournament mark (`public/images/logo.png`) plus the white club crest extracted from the official backdrop (`public/images/club-crest.png`). The former فارس المونديال / "Mondial Knight" name and knight emblem were dropped (June 2026) and must not reappear in UI copy; page titles use "نادي القادسية — كأس العالم 2026". The repo/project name stays `qadsiah-predictions`.
 
-A public, QR-code-driven score prediction site for Al-Qadsiah FC. Employees watching Saudi national team matches at the club venue scan a poster QR, enter **name + phone** (no account), and predict the exact score. After the match, exact-score predictors (or the closest, when nobody is exact) become winners, and a **lucky wheel** is spun live on the venue projector to pick the prize winner.
+A public, QR-code-driven score prediction site for Al-Qadsiah FC. Employees watching Saudi national team matches at the club venue scan a poster QR, enter **name + phone** (no account), and predict the exact score. After the match, the exact-score predictors become winners (if nobody is exact the match has no winners), and a **lucky wheel** is spun live on the venue projector to pick the prize winner.
 
 **Client:** Al-Qadsiah FC (Saudi Arabia)
 **Sibling project:** `../reda-predictions` (same stack, but that one uses per-employee Firebase Auth accounts, points and leaderboards — this project has none of that)
@@ -62,7 +62,7 @@ src/
 │   ├── firebase.ts                  # Firebase init
 │   ├── firestore.ts                 # All Firestore ops (submitPrediction, enterResult, saveWheelSpin, …)
 │   ├── phone.ts                     # Saudi phone normalize/mask/sha-256 hash (tested)
-│   ├── winners.ts                   # Exact/closest winner computation (tested)
+│   ├── winners.ts                   # Exact-score winner computation (tested)
 │   ├── matchStatus.ts               # upcoming/locked/completed derived from the clock
 │   ├── format.ts                    # Gregorian-forced date formatting; datetime-local helpers
 │   ├── confetti.ts                  # Brand-colored celebration burst
@@ -106,7 +106,7 @@ src/
 ## Firestore Collections
 
 ### `matches`
-Generic two-team fixture (the main event is Saudi matches, but the admin can add any WC game for testing/screenings). `home`/`away` is just fixture order — the tournament is on neutral ground, so the UI labels teams "first/second", never home/away, and there are no venue fields. Key fields: `home`/`away` (`TeamInfo`: `{name, nameAr, flag, crest?}` — manual create defaults the first team to Saudi Arabia), `stage`, `matchDate`, `status` (`"upcoming" | "completed"` — "locked" is **derived from the clock**, never stored), `actualScoreHome/Away`, `winnerTier` (`"exact" | "closest" | null`), `winnersCount`, `prizeWinner` (`{predictionId, name, phoneMasked} | null`), `wheelSpins[]` (every spin incl. re-spins), `apiMatchId`.
+Generic two-team fixture (the main event is Saudi matches, but the admin can add any WC game for testing/screenings). `home`/`away` is just fixture order — the tournament is on neutral ground, so the UI labels teams "first/second", never home/away, and there are no venue fields. Key fields: `home`/`away` (`TeamInfo`: `{name, nameAr, flag, crest?}` — manual create defaults the first team to Saudi Arabia), `stage`, `matchDate`, `status` (`"upcoming" | "completed"` — "locked" is **derived from the clock**, never stored), `actualScoreHome/Away`, `winnerTier` (`"exact"` or `null`), `winnersCount`, `prizeWinner` (`{predictionId, name, phoneMasked} | null`), `wheelSpins[]` (every spin incl. re-spins), `apiMatchId`.
 
 `snapToMatch()` normalizes legacy pre-refactor docs (`opponent`+`saudiIsHome` shape) on read so they render and can be deleted — but delete any such test docs rather than keeping them.
 
@@ -135,7 +135,7 @@ Participants are anonymous — there is no Firebase Auth for them — so all int
 
 ## Winner & wheel rules
 
-- Winner = exact final score. If nobody is exact, **all predictions tied at the smallest total goal error** (`|Δsaudi| + |Δopp|`) win instead (`winnerTier: "closest"`).
+- Winner = exact final score only. If nobody predicted the exact score, the match has **no winners**. `goalError` (`|Δhome| + |Δaway|`) is still recorded per prediction for the admin table.
 - `enterResult()` recomputes everything idempotently; re-entering a corrected score **resets `prizeWinner` and `wheelSpins`** (the winner pool changed), so the wheel must be re-spun.
 - The wheel (`/admin/wheel/:matchId`) picks with `crypto.getRandomValues`, animates ~7s, saves `prizeWinner` + appends to `wheelSpins`. **Re-spin** (winner not in the room) excludes previously drawn names — tracked locally too, so an instant re-spin can't re-draw the same person before the snapshot lands.
 

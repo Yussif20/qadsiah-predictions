@@ -89,15 +89,8 @@ export function MatchWinnersCard({ match, featured = false }: MatchWinnersCardPr
         ) : (
           <>
             <div className="mb-2 flex items-center gap-2 text-xs font-bold text-muted-foreground">
-              <span
-                className={cn(
-                  "rounded-full px-2.5 py-0.5",
-                  match.winnerTier === "exact"
-                    ? "bg-success/15 text-success"
-                    : "bg-warning/15 text-warning"
-                )}
-              >
-                {match.winnerTier === "exact" ? t("winners.exact") : t("winners.closest")}
+              <span className="rounded-full bg-success/15 px-2.5 py-0.5 text-success">
+                {t("winners.exact")}
               </span>
               <span>{t("winners.winnersCount", { count: winners.length })}</span>
             </div>

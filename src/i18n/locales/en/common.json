@@ -54,7 +54,6 @@
     "subtitle": "Correct predictions for every match — and the lucky wheel prize winner.",
     "latest": "Latest match",
     "exact": "Exact score",
-    "closest": "Closest prediction",
     "prizeWinner": "Lucky wheel prize winner",
     "noWinners": "No winners for this match.",
     "noCompleted": "No completed matches yet — winners will appear here after the first final whistle.",
@@ -66,7 +65,7 @@
     "step1Title": "Scan & predict",
     "step1Text": "Enter your name, mobile number and your expected final score before kickoff.",
     "step2Title": "Exact score wins",
-    "step2Text": "Everyone who predicts the exact final score is a winner. If nobody gets it exactly, the closest predictions win.",
+    "step2Text": "Everyone who predicts the exact final score is a winner.",
     "step3Title": "Lucky wheel",
     "step3Text": "After the match, the lucky wheel is spun live among the winners — one of them takes the prize!"
   },

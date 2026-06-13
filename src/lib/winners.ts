@@ -12,9 +12,8 @@ export interface PredictionLike {
 }
 
 export interface WinnersResult {
-  /** null when there were no predictions at all. */
+  /** "exact" when at least one prediction is exact, else null. */
   tier: WinnerTier | null;
-  minError: number | null;
   winnerIds: Set<string>;
   /** goalError per prediction id — persisted so the admin table can show it. */
   errors: Map<string, number>;
@@ -29,8 +28,9 @@ export function goalError(predicted: ScorePair, actual: ScorePair): number {
 }
 
 /**
- * Winners = everyone with the exact score (error 0). If nobody is exact,
- * fall back to all predictions tied at the smallest goal error.
+ * Winners = everyone who predicted the exact score (goal error 0). If nobody
+ * is exact, the match simply has no winners. `errors` is still filled for
+ * every prediction so the admin table can show each entry's goal error.
  */
 export function computeWinners(predictions: PredictionLike[], actual: ScorePair): WinnersResult {
   const errors = new Map<string, number>();
@@ -44,17 +44,11 @@ export function computeWinners(predictions: PredictionLike[], actual: ScorePair)
     );
   }
 
-  if (predictions.length === 0) {
-    return { tier: null, minError: null, winnerIds: new Set(), errors };
-  }
-
-  const minError = Math.min(...errors.values());
   const winnerIds = new Set(
-    predictions.filter((p) => errors.get(p.id) === minError).map((p) => p.id)
+    predictions.filter((p) => errors.get(p.id) === 0).map((p) => p.id)
   );
   return {
-    tier: minError === 0 ? "exact" : "closest",
-    minError,
+    tier: winnerIds.size > 0 ? "exact" : null,
     winnerIds,
     errors,
   };

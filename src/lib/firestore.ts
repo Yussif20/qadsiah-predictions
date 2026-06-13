@@ -224,8 +224,9 @@ export interface EnterResultOutcome {
 }
 
 /**
- * Save the final score, mark winners (exact, else closest), and complete the
- * match. Safe to re-run for a corrected result — everything is recomputed,
+ * Save the final score, mark winners (exact final score only — no winners if
+ * nobody nailed it), and complete the match. Safe to re-run for a corrected
+ * result — everything is recomputed,
  * and any earlier wheel outcome is reset since the winner pool changed.
  */
 export async function enterResult(

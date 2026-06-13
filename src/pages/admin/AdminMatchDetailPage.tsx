@@ -178,7 +178,7 @@ export function AdminMatchDetailPage() {
                 {t("detail.openWheel")}
               </Link>
             ) : (
-              <p className="text-xs text-muted-foreground">{t("detail.wheelNeedsResult")}</p>
+              <p className="text-xs text-muted-foreground">{t("wheel.noWinners")}</p>
             )}
           </div>
           {match.prizeWinner && (

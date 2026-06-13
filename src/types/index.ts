@@ -15,7 +15,8 @@ export type MatchStatus = "upcoming" | "completed";
 /** What the UI shows: upcoming (open), locked (kicked off, no result yet), completed. */
 export type EffectiveMatchStatus = "upcoming" | "locked" | "completed";
 
-export type WinnerTier = "exact" | "closest";
+/** Winners must predict the exact final score; this is their tier. */
+export type WinnerTier = "exact";
 
 export interface TeamInfo {
   /** English display name. */
@@ -60,7 +61,7 @@ export interface Match {
   status: MatchStatus;
   actualScoreHome: number | null;
   actualScoreAway: number | null;
-  /** Tier of this match's winners — "exact", or "closest" when nobody was exact. */
+  /** "exact" when there are winners, null when nobody predicted the exact score. */
   winnerTier: WinnerTier | null;
   winnersCount: number;
   prizeWinner: PrizeWinner | null;
