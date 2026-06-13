@@ -29,15 +29,17 @@ export function HomePage() {
       <div className="rise-in relative overflow-hidden rounded-xl border">
         <img src="/images/hero.jpg" alt="" className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/80" />
-        <div className="relative px-4 pb-28 pt-10 text-center sm:pb-32 sm:pt-12">
+        <div className="relative flex items-center justify-center gap-5 px-4 pb-28 pt-10 sm:gap-6 sm:pb-32 sm:pt-12">
           <img
             src="/images/logo.png"
             alt="WE ARE 26"
-            className="mx-auto mb-4 w-24 rounded-2xl shadow-2xl ring-1 ring-white/20 sm:w-28"
+            className="w-24 rounded-2xl shadow-2xl ring-1 ring-white/20 sm:w-28"
           />
-          <h1 className="text-gradient-brand text-2xl font-black drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-3xl">
-            {t("appTagline")}
-          </h1>
+          <img
+            src="/images/club-crest.png"
+            alt={t("appTagline")}
+            className="w-20 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:w-24"
+          />
         </div>
       </div>
 

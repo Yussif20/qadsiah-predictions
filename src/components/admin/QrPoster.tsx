@@ -6,11 +6,14 @@ import { Download, ImageDown, QrCode as QrCodeIcon } from "lucide-react";
 import { inputClass } from "@/components/predict/PredictionForm";
 import { Spinner } from "@/components/ui/Spinner";
 
-// Poster copy is always Arabic — it hangs in the venue for the employees,
-// regardless of which language the admin uses in the panel.
-const POSTER_TITLE = "نادي القادسية";
-const POSTER_SUBTITLE = "كأس العالم 2026";
-const POSTER_CTA = "امسح الرمز وتوقّع النتيجة واربح الجائزة";
+// Poster copy follows the admin panel's current language (Arabic or English),
+// so the printed poster can be generated in either language.
+type PosterCopy = {
+  title: string;
+  subtitle: string;
+  cta: string;
+  dir: "rtl" | "ltr";
+};
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -39,7 +42,7 @@ function roundedRect(
 }
 
 /** Compose the printable A4-ish (2:3) poster: artwork + headline + QR card. */
-async function composePoster(url: string): Promise<string> {
+async function composePoster(url: string, copy: PosterCopy): Promise<string> {
   const [bg, qrImg] = await Promise.all([
     loadImage("/images/poster.jpg"),
     QRCode.toDataURL(url, {
@@ -72,25 +75,27 @@ async function composePoster(url: string): Promise<string> {
 
   // Headline in the plain deep-green band above the artwork
   ctx.save();
+  ctx.direction = copy.dir;
   ctx.shadowColor = "rgba(0,0,0,0.85)";
   ctx.shadowBlur = 18;
   ctx.shadowOffsetY = 4;
   ctx.fillStyle = "#B4D337";
   ctx.font = "900 96px Cairo, sans-serif";
-  ctx.fillText(POSTER_TITLE, W / 2, 170);
+  ctx.fillText(copy.title, W / 2, 170);
   ctx.fillStyle = "#FFFFFF";
   ctx.font = "700 40px Cairo, sans-serif";
-  ctx.fillText(POSTER_SUBTITLE, W / 2, 237);
+  ctx.fillText(copy.subtitle, W / 2, 237);
   ctx.restore();
 
   // Call to action above the QR card, in the deep-green lower third
   ctx.save();
+  ctx.direction = copy.dir;
   ctx.shadowColor = "rgba(0,0,0,0.9)";
   ctx.shadowBlur = 14;
   ctx.shadowOffsetY = 3;
   ctx.fillStyle = "#B4D337";
   ctx.font = "800 52px Cairo, sans-serif";
-  ctx.fillText(POSTER_CTA, W / 2, 1232);
+  ctx.fillText(copy.cta, W / 2, 1232);
   ctx.restore();
 
   // White QR card with a soft green glow
@@ -120,7 +125,7 @@ async function composePoster(url: string): Promise<string> {
 }
 
 export function QrPoster() {
-  const { t } = useTranslation("admin");
+  const { t, i18n } = useTranslation("admin");
   const [url, setUrl] = useState(() => window.location.origin);
   const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [poster, setPoster] = useState<string | null>(null);
@@ -148,7 +153,14 @@ export function QrPoster() {
     if (!url.trim() || composing) return;
     setComposing(true);
     try {
-      setPoster(await composePoster(url.trim()));
+      setPoster(
+        await composePoster(url.trim(), {
+          title: t("qr.posterTitle"),
+          subtitle: t("qr.posterSubtitle"),
+          cta: t("qr.posterCta"),
+          dir: i18n.dir() === "rtl" ? "rtl" : "ltr",
+        })
+      );
     } catch {
       toast.error(t("qr.posterError"));
     } finally {
