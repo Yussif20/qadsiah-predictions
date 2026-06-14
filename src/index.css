@@ -120,9 +120,10 @@ body::before {
     inset: 4rem 50% 0 0;
     background-size: cover; /* fill the panel rather than letterbox it */
     opacity: 0.9; /* a real image panel here, not a faint wash */
-    /* solid panel that dissolves at the seam into the content half */
-    mask-image: linear-gradient(to right, #000 80%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    /* solid panel that stays full almost to the seam, with just a short blend
+       into the content half so the edge isn't a hard vertical line */
+    mask-image: linear-gradient(to right, #000 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 92%, transparent 100%);
   }
 }
 
