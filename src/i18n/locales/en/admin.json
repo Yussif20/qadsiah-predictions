@@ -88,10 +88,7 @@
     "hint": "Print this code on the poster — scanning it opens the prediction page.",
     "posterMake": "Generate venue poster",
     "posterDownload": "Download poster PNG",
-    "posterHint": "Ready-to-print 2:3 poster (fits A4/A3) with the QR code and a call-to-action in the panel's current language.",
-    "posterTitle": "Al Qadisiyah Theater",
-    "posterSubtitle": "World Cup 2026",
-    "posterCta": "Scan, predict the score, and win the prize",
+    "posterHint": "Ready-to-print A4 poster — the club artwork with your live QR code.",
     "posterError": "Failed to generate the poster."
   },
   "wheel": {

@@ -34,7 +34,7 @@
   "form": {
     "title": "توقّع النتيجة",
     "name": "الاسم",
-    "namePlaceholder": "مثال: محمد العلي",
+    "namePlaceholder": "مثال: سعود علي",
     "phone": "رقم الجوال",
     "phonePlaceholder": "05XXXXXXXX",
     "phoneHint": "يُستخدم فقط لتمييز توقعك وللتواصل معك في حال فوزك.",

@@ -6,14 +6,12 @@ import { Download, ImageDown, QrCode as QrCodeIcon } from "lucide-react";
 import { inputClass } from "@/components/predict/PredictionForm";
 import { Spinner } from "@/components/ui/Spinner";
 
-// Poster copy follows the admin panel's current language (Arabic or English),
-// so the printed poster can be generated in either language.
-type PosterCopy = {
-  title: string;
-  subtitle: string;
-  cta: string;
-  dir: "rtl" | "ltr";
-};
+// The poster is the client's finished artwork (public/images/poster.jpg) — the
+// headline, logos and layout are all baked into the image. We only overlay the
+// live QR onto the white card, replacing the placeholder QR in the design.
+// Card position, measured from the artwork (596×842 pt page), as fractions of
+// the image: a 346pt square at x124,y315.
+const CARD = { x: 0.2081, y: 0.3741, side: 0.5805 }; // side as a fraction of WIDTH
 
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -41,29 +39,31 @@ function roundedRect(
   ctx.closePath();
 }
 
-/** Compose the printable A4-ish (2:3) poster: artwork + headline + QR card. */
-async function composePoster(url: string, copy: PosterCopy): Promise<string> {
-  const [bg, qrImg] = await Promise.all([
-    loadImage("/images/poster.jpg"),
-    QRCode.toDataURL(url, {
-      width: 520,
-      margin: 1,
-      color: { dark: "#04120F", light: "#FFFFFF" },
-    }).then(loadImage),
-  ]);
-  // Make sure Cairo is ready before drawing Arabic on the canvas.
-  try {
-    await Promise.all([
-      document.fonts.load("900 96px Cairo"),
-      document.fonts.load("700 40px Cairo"),
-      document.fonts.load("800 52px Cairo"),
-    ]);
-  } catch {
-    /* system font fallback still renders correctly */
-  }
+/** Compose the venue poster: the client's A4 artwork with our live QR overlaid
+ *  onto the card (covering the design's placeholder QR). */
+async function composePoster(url: string): Promise<string> {
+  const bg = await loadImage("/images/poster.jpg");
+  const W = bg.naturalWidth;
+  const H = bg.naturalHeight;
 
-  const W = 1200;
-  const H = 1800;
+  // Card geometry in output pixels. The card is a square, so its side is taken
+  // from the width and reused for the height to stay square on any image size.
+  const cardX = CARD.x * W;
+  const cardY = CARD.y * H;
+  const side = CARD.side * W;
+  // Quiet zone around the QR (needed for reliable scanning); the rest of the
+  // card stays white, matching the design.
+  const quiet = side * 0.07;
+  const qrPx = Math.round(side - quiet * 2);
+
+  // Generate the QR at exactly the size it is drawn — no scaling, crisp modules.
+  // Dark modules (not the mockup's brand-green) for dependable scanning at the venue.
+  const qrImg = await QRCode.toDataURL(url, {
+    width: qrPx,
+    margin: 0,
+    color: { dark: "#04120F", light: "#FFFFFF" },
+  }).then(loadImage);
+
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
@@ -71,61 +71,21 @@ async function composePoster(url: string, copy: PosterCopy): Promise<string> {
   if (!ctx) throw new Error("canvas-unsupported");
 
   ctx.drawImage(bg, 0, 0, W, H);
-  ctx.textAlign = "center";
 
-  // Headline in the plain deep-green band above the artwork
-  ctx.save();
-  ctx.direction = copy.dir;
-  ctx.shadowColor = "rgba(0,0,0,0.85)";
-  ctx.shadowBlur = 18;
-  ctx.shadowOffsetY = 4;
-  ctx.fillStyle = "#B4D337";
-  ctx.font = "900 96px Cairo, sans-serif";
-  ctx.fillText(copy.title, W / 2, 170);
+  // Wipe the placeholder QR with a white rounded patch. A radius larger than the
+  // card's keeps this patch inside the card silhouette (white-on-white, no seam,
+  // never spilling into the teal corners).
   ctx.fillStyle = "#FFFFFF";
-  ctx.font = "700 40px Cairo, sans-serif";
-  ctx.fillText(copy.subtitle, W / 2, 237);
-  ctx.restore();
-
-  // Call to action above the QR card, in the deep-green lower third
-  ctx.save();
-  ctx.direction = copy.dir;
-  ctx.shadowColor = "rgba(0,0,0,0.9)";
-  ctx.shadowBlur = 14;
-  ctx.shadowOffsetY = 3;
-  ctx.fillStyle = "#B4D337";
-  ctx.font = "800 52px Cairo, sans-serif";
-  ctx.fillText(copy.cta, W / 2, 1232);
-  ctx.restore();
-
-  // White QR card with a soft green glow
-  const qrSize = 380;
-  const pad = 26;
-  const boxW = qrSize + pad * 2;
-  const boxX = (W - boxW) / 2;
-  const boxY = 1268;
-  ctx.save();
-  ctx.shadowColor = "rgba(69,183,90,0.45)";
-  ctx.shadowBlur = 44;
-  ctx.fillStyle = "#FFFFFF";
-  roundedRect(ctx, boxX, boxY, boxW, boxW, 28);
+  roundedRect(ctx, cardX, cardY, side, side, side * 0.13);
   ctx.fill();
-  ctx.restore();
-  ctx.drawImage(qrImg, boxX + pad, boxY + pad, qrSize, qrSize);
 
-  // Bare link under the card for people who prefer typing it
-  ctx.save();
-  ctx.direction = "ltr";
-  ctx.fillStyle = "rgba(255,255,255,0.9)";
-  ctx.font = "600 30px 'Space Grotesk', Cairo, sans-serif";
-  ctx.fillText(url.replace(/^https?:\/\//, ""), W / 2, boxY + boxW + 58);
-  ctx.restore();
+  ctx.drawImage(qrImg, cardX + quiet, cardY + quiet, qrPx, qrPx);
 
   return canvas.toDataURL("image/png");
 }
 
 export function QrPoster() {
-  const { t, i18n } = useTranslation("admin");
+  const { t } = useTranslation("admin");
   const [url, setUrl] = useState(() => window.location.origin);
   const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [poster, setPoster] = useState<string | null>(null);
@@ -153,14 +113,7 @@ export function QrPoster() {
     if (!url.trim() || composing) return;
     setComposing(true);
     try {
-      setPoster(
-        await composePoster(url.trim(), {
-          title: t("qr.posterTitle"),
-          subtitle: t("qr.posterSubtitle"),
-          cta: t("qr.posterCta"),
-          dir: i18n.dir() === "rtl" ? "rtl" : "ltr",
-        })
-      );
+      setPoster(await composePoster(url.trim()));
     } catch {
       toast.error(t("qr.posterError"));
     } finally {

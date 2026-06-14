@@ -34,7 +34,7 @@
   "form": {
     "title": "Predict the score",
     "name": "Your name",
-    "namePlaceholder": "e.g. Mohammed Alali",
+    "namePlaceholder": "e.g. Saud Ali",
     "phone": "Mobile number",
     "phonePlaceholder": "05XXXXXXXX",
     "phoneHint": "Used only to identify your prediction and contact you if you win.",

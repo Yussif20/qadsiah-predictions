@@ -2,6 +2,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Official Qadsiah brand typeface (from the club's designer). One self-hosted
+   WOFF2 covering Latin + full Arabic (with shaping) + Latin/Arabic-Indic digits,
+   so it drives body, Arabic, and the big score digits alike. It ships a single
+   master weight, so the face is declared across the whole 100–900 range — the
+   browser uses the file as-is at every requested weight instead of faux-bolding
+   an already-heavy display face. */
+@font-face {
+  font-family: "Qadsiah";
+  src: url("/fonts/qadsiah.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* World Cup 2026 club palette, sampled from the official backdrop artwork:
      bright green #45B75A, lime #B4D337, flag green #0B5332. The whole-screen
@@ -42,11 +56,13 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* Same family setup as reda-predictions: Space Grotesk for Latin, Cairo
-     for Arabic (applied via the RTL rule below), Bebas Neue for score digits */
-  --font-sans: "Space Grotesk", system-ui, sans-serif;
-  --font-arabic: "Cairo", system-ui, sans-serif;
-  --font-display: "Bebas Neue", "Space Grotesk", system-ui, sans-serif;
+  /* One brand typeface everywhere — the club's Qadsiah font (declared above)
+     replaced the former Space Grotesk / Cairo / Bebas Neue trio. It carries both
+     Latin and Arabic, so the same token serves body, the RTL rule below, and the
+     big score digits. */
+  --font-sans: "Qadsiah", system-ui, sans-serif;
+  --font-arabic: "Qadsiah", system-ui, sans-serif;
+  --font-display: "Qadsiah", system-ui, sans-serif;
 }
 
 * {
@@ -366,7 +382,7 @@ button {
     0 8px 28px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Headline gradient (fill, not font — Cairo/RTL safe) ──
+/* ── Headline gradient (fill, not font — Arabic/RTL safe) ──
    background-clip: text only paints inside the element box, so Arabic
    descenders that overhang a tight line-height would render transparent
    ("cropped"). The padding extends the paint box; the negative margins

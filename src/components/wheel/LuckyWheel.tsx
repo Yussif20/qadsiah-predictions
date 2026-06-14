@@ -147,7 +147,7 @@ export function LuckyWheel({ entries, target, onSpinEnd, className }: LuckyWheel
                   fontSize={fontSize(n)}
                   fontWeight="700"
                   fill={n === 1 ? TEXT_FILLS[0] : TEXT_FILLS[i % TEXT_FILLS.length]}
-                  style={{ fontFamily: "Cairo, sans-serif" }}
+                  style={{ fontFamily: "Qadsiah, sans-serif" }}
                 >
                   {truncate(entry.name, n)}
                 </text>
