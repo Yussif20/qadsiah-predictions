@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import QRCode from "qrcode";
 import { toast } from "sonner";
-import { Download, ImageDown, QrCode as QrCodeIcon } from "lucide-react";
+import { Download, FileDown, ImageDown, QrCode as QrCodeIcon } from "lucide-react";
 import { inputClass } from "@/components/predict/PredictionForm";
 import { Spinner } from "@/components/ui/Spinner";
 
@@ -84,12 +84,92 @@ async function composePoster(url: string): Promise<string> {
   return canvas.toDataURL("image/png");
 }
 
+function bytesFromBase64(b64: string): Uint8Array {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i += 1) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+/** Wrap a full-bleed JPEG in a single-page PDF, with no library: the page is
+ *  sized to the image's aspect at A4 width and the image fills it edge to edge.
+ *  PDF embeds the JPEG directly via the native DCTDecode filter. */
+function buildImagePdf(jpeg: Uint8Array, imgW: number, imgH: number): Blob {
+  const encoder = new TextEncoder();
+  const parts: Uint8Array[] = [];
+  let length = 0;
+  const offsets: number[] = [];
+  const push = (data: string | Uint8Array) => {
+    const bytes = typeof data === "string" ? encoder.encode(data) : data;
+    parts.push(bytes);
+    length += bytes.length;
+  };
+  const markObj = () => offsets.push(length);
+
+  // Page = A4 width, height derived from the image so it never distorts; the
+  // poster artwork is already A4, so this lands on a standard A4 sheet.
+  const PAGE_W = 595.28;
+  const PAGE_H = +((PAGE_W * imgH) / imgW).toFixed(2);
+  const w = PAGE_W.toFixed(2);
+  const h = PAGE_H.toFixed(2);
+  const content = `q\n${w} 0 0 ${h} 0 0 cm\n/Im0 Do\nQ\n`;
+
+  push("%PDF-1.3\n");
+  markObj();
+  push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+  markObj();
+  push("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+  markObj();
+  push(
+    `3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] ` +
+      "/Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n"
+  );
+  markObj();
+  push(
+    `4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} ` +
+      `/ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`
+  );
+  push(jpeg);
+  push("\nendstream\nendobj\n");
+  markObj();
+  push(`5 0 obj\n<< /Length ${content.length} >>\nstream\n${content}endstream\nendobj\n`);
+
+  const xrefStart = length;
+  let xref = "xref\n0 6\n0000000000 65535 f \n";
+  for (const off of offsets) xref += `${String(off).padStart(10, "0")} 00000 n \n`;
+  push(xref);
+  push(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF\n`);
+
+  return new Blob(parts as BlobPart[], { type: "application/pdf" });
+}
+
+/** Compose the venue poster (artwork + live QR) and wrap it in a print-ready
+ *  A4 PDF. The poster PNG is re-encoded to JPEG so it can embed via DCTDecode;
+ *  high quality keeps the QR scannable. */
+async function composePosterPdf(url: string): Promise<Blob> {
+  const posterImg = await composePoster(url).then(loadImage);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = posterImg.naturalWidth;
+  canvas.height = posterImg.naturalHeight;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("canvas-unsupported");
+  // JPEG has no alpha — paint white first so any transparency stays white.
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(posterImg, 0, 0);
+
+  const jpeg = bytesFromBase64(canvas.toDataURL("image/jpeg", 0.92).split(",")[1]);
+  return buildImagePdf(jpeg, canvas.width, canvas.height);
+}
+
 export function QrPoster() {
   const { t } = useTranslation("admin");
   const [url, setUrl] = useState(() => window.location.origin);
   const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [poster, setPoster] = useState<string | null>(null);
   const [composing, setComposing] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -121,6 +201,25 @@ export function QrPoster() {
     }
   };
 
+  const downloadPdf = async () => {
+    if (!url.trim() || pdfBusy) return;
+    setPdfBusy(true);
+    try {
+      const href = URL.createObjectURL(await composePosterPdf(url.trim()));
+      const a = document.createElement("a");
+      a.href = href;
+      a.download = "qadsiah-venue-poster.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(href);
+    } catch {
+      toast.error(t("qr.pdfError"));
+    } finally {
+      setPdfBusy(false);
+    }
+  };
+
   return (
     <section className="card-elevated rounded-xl p-5">
       <h2 className="mb-3 flex items-center gap-2 text-base font-extrabold">
@@ -143,6 +242,14 @@ export function QrPoster() {
                 {t("qr.download")}
               </a>
             )}
+            <button
+              onClick={downloadPdf}
+              disabled={pdfBusy || !url.trim()}
+              className="inline-flex items-center gap-2 rounded-lg border border-primary/50 px-4 py-2 text-sm font-extrabold text-primary hover:bg-primary/10 disabled:opacity-50"
+            >
+              {pdfBusy ? <Spinner className="size-4" /> : <FileDown className="size-4" />}
+              {t("qr.downloadPdf")}
+            </button>
             <button
               onClick={makePoster}
               disabled={composing || !url.trim()}

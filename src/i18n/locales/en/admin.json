@@ -85,6 +85,8 @@
     "title": "QR code for the venue poster",
     "url": "Website link",
     "download": "Download QR",
+    "downloadPdf": "Download poster PDF",
+    "pdfError": "Failed to generate the PDF.",
     "hint": "Print this code on the poster — scanning it opens the prediction page.",
     "posterMake": "Generate venue poster",
     "posterDownload": "Download poster PNG",
