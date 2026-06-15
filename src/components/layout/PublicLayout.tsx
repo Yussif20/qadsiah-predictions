@@ -30,9 +30,12 @@ export function PublicLayout() {
     // right half on desktop (lg:ml-[50%]), opposite the left-half artwork panel.
     <div className="flex min-h-screen flex-col">
       <header className="glass sticky top-0 z-40">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:px-6">
-          {/* Brand is logos-only: the WE ARE 26 mark and the club crest frame the nav */}
-          <Link to="/" className="shrink-0">
+        {/* Brand is logos-only: the WE ARE 26 mark and the club crest frame the
+            nav. The logos are pinned with physical left/right so they keep the
+            same physical sides in both LTR and RTL — the Qadsiah club crest is
+            always first on the right regardless of language/direction. */}
+        <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-center gap-2 px-4 sm:px-6">
+          <Link to="/" className="absolute left-4 shrink-0 sm:left-6">
             <img
               src="/images/logo.png"
               alt="WE ARE 26"
@@ -59,7 +62,7 @@ export function PublicLayout() {
               <Shield className="size-3.5" />
             </Link>
           </nav>
-          <Link to="/" className="shrink-0">
+          <Link to="/" className="absolute right-4 shrink-0 sm:right-6">
             <img src="/images/club-crest.png" alt={t("appTagline")} className="h-8 w-auto" />
           </Link>
         </div>
