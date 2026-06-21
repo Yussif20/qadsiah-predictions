@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Lock, Trophy } from "lucide-react";
+import { Clock, Lock, Trophy } from "lucide-react";
 import { useMatches } from "@/hooks/useMatches";
 import { useNow } from "@/hooks/useNow";
-import { effectiveMatchStatus } from "@/lib/matchStatus";
+import { effectiveMatchStatus, predictionsOpen, predictionsOpenAtMs } from "@/lib/matchStatus";
+import { PREDICTIONS_OPEN_BEFORE_HOURS } from "@/lib/constants";
 import { MatchHero } from "@/components/predict/MatchHero";
 import { PredictionForm } from "@/components/predict/PredictionForm";
 import { CountdownTimer } from "@/components/predict/CountdownTimer";
@@ -73,19 +74,40 @@ export function HomePage() {
               <MatchHero match={current.match} />
             </div>
 
-            {current.status === "upcoming" && (
-              <>
-                <div className="rise-in" style={{ animationDelay: "180ms" }}>
-                  <CountdownTimer targetMs={current.match.matchDate.toMillis()} />
-                  <p className="mt-2 text-center text-[11px] text-muted-foreground">
-                    {t("match.predictionsCloseAtKickoff")}
-                  </p>
-                </div>
-                <div className="rise-in" style={{ animationDelay: "270ms" }}>
-                  <PredictionForm match={current.match} open />
-                </div>
-              </>
-            )}
+            {current.status === "upcoming" &&
+              (predictionsOpen(current.match, now) ? (
+                <>
+                  <div className="rise-in" style={{ animationDelay: "180ms" }}>
+                    <CountdownTimer targetMs={current.match.matchDate.toMillis()} />
+                    <p className="mt-2 text-center text-[11px] text-muted-foreground">
+                      {t("match.predictionsCloseAtKickoff")}
+                    </p>
+                  </div>
+                  <div className="rise-in" style={{ animationDelay: "270ms" }}>
+                    <PredictionForm match={current.match} open />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    className="rise-in card-elevated rounded-xl border-info/40 p-6 text-center"
+                    style={{ animationDelay: "180ms" }}
+                  >
+                    <span className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-gradient-to-b from-info/30 to-info/5 ring-1 ring-info/40">
+                      <Clock className="size-5 text-info" />
+                    </span>
+                    <p className="text-sm font-bold">
+                      {t("match.predictionsOpenWindow", { hours: PREDICTIONS_OPEN_BEFORE_HOURS })}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {t("match.predictionsOpenIn")}
+                    </p>
+                  </div>
+                  <div className="rise-in" style={{ animationDelay: "270ms" }}>
+                    <CountdownTimer targetMs={predictionsOpenAtMs(current.match)} />
+                  </div>
+                </>
+              ))}
 
             {current.status === "locked" && (
               <>

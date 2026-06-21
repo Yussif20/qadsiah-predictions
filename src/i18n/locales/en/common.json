@@ -29,7 +29,9 @@
     "lockedHint": "Winners will be announced after the final whistle.",
     "completed": "Full-time",
     "noMatches": "No upcoming match yet. Check back soon!",
-    "predictionsCloseAtKickoff": "Predictions close at kickoff"
+    "predictionsCloseAtKickoff": "Predictions close at kickoff",
+    "predictionsOpenWindow": "Predictions open {{hours}} hours before kickoff",
+    "predictionsOpenIn": "Predictions open in"
   },
   "form": {
     "title": "Predict the score",

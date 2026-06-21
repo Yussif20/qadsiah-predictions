@@ -29,7 +29,9 @@
     "lockedHint": "سيتم الإعلان عن الفائزين بعد صافرة النهاية.",
     "completed": "النتيجة النهائية",
     "noMatches": "لا توجد مباراة قادمة حالياً، عُد قريباً!",
-    "predictionsCloseAtKickoff": "تُغلق التوقعات عند انطلاق المباراة"
+    "predictionsCloseAtKickoff": "تُغلق التوقعات عند انطلاق المباراة",
+    "predictionsOpenWindow": "تُفتح التوقعات قبل {{hours}} ساعات من انطلاق المباراة",
+    "predictionsOpenIn": "تُفتح التوقعات خلال"
   },
   "form": {
     "title": "توقّع النتيجة",

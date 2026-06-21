@@ -2,6 +2,14 @@ import type { Stage, TeamInfo } from "@/types";
 
 export const SCORE_MAX = 15;
 
+/**
+ * Predictions open only this many hours before kickoff (and close at kickoff).
+ * Mirror any change in `firestore.rules` → `matchOpen` (`duration.value(3, 'h')`),
+ * which can't import this module.
+ */
+export const PREDICTIONS_OPEN_BEFORE_HOURS = 3;
+export const PREDICTIONS_OPEN_BEFORE_MS = PREDICTIONS_OPEN_BEFORE_HOURS * 60 * 60 * 1000;
+
 export const STAGES: Stage[] = [
   "group",
   "round32",
