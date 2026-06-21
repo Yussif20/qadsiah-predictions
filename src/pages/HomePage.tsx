@@ -97,7 +97,7 @@ export function HomePage() {
                       <Clock className="size-5 text-info" />
                     </span>
                     <p className="text-sm font-bold">
-                      {t("match.predictionsOpenWindow", { hours: PREDICTIONS_OPEN_BEFORE_HOURS })}
+                      {t("match.predictionsOpenWindow", { count: PREDICTIONS_OPEN_BEFORE_HOURS })}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {t("match.predictionsOpenIn")}

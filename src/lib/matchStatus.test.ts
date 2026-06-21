@@ -26,11 +26,11 @@ describe("predictionsOpenAtMs", () => {
 
 describe("predictionsOpen", () => {
   it("is closed before the window opens", () => {
-    expect(predictionsOpen(match("upcoming"), KICKOFF - 3 * HOUR - 1)).toBe(false);
+    expect(predictionsOpen(match("upcoming"), KICKOFF - PREDICTIONS_OPEN_BEFORE_MS - 1)).toBe(false);
   });
 
   it("opens exactly at the window boundary", () => {
-    expect(predictionsOpen(match("upcoming"), KICKOFF - 3 * HOUR)).toBe(true);
+    expect(predictionsOpen(match("upcoming"), KICKOFF - PREDICTIONS_OPEN_BEFORE_MS)).toBe(true);
   });
 
   it("is open inside the window", () => {

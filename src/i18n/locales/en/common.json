@@ -30,7 +30,8 @@
     "completed": "Full-time",
     "noMatches": "No upcoming match yet. Check back soon!",
     "predictionsCloseAtKickoff": "Predictions close at kickoff",
-    "predictionsOpenWindow": "Predictions open {{hours}} hours before kickoff",
+    "predictionsOpenWindow_one": "Predictions open 1 hour before kickoff",
+    "predictionsOpenWindow_other": "Predictions open {{count}} hours before kickoff",
     "predictionsOpenIn": "Predictions open in"
   },
   "form": {

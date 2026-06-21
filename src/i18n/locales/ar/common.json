@@ -30,7 +30,11 @@
     "completed": "النتيجة النهائية",
     "noMatches": "لا توجد مباراة قادمة حالياً، عُد قريباً!",
     "predictionsCloseAtKickoff": "تُغلق التوقعات عند انطلاق المباراة",
-    "predictionsOpenWindow": "تُفتح التوقعات قبل {{hours}} ساعات من انطلاق المباراة",
+    "predictionsOpenWindow_one": "تُفتح التوقعات قبل ساعة واحدة من انطلاق المباراة",
+    "predictionsOpenWindow_two": "تُفتح التوقعات قبل ساعتين من انطلاق المباراة",
+    "predictionsOpenWindow_few": "تُفتح التوقعات قبل {{count}} ساعات من انطلاق المباراة",
+    "predictionsOpenWindow_many": "تُفتح التوقعات قبل {{count}} ساعة من انطلاق المباراة",
+    "predictionsOpenWindow_other": "تُفتح التوقعات قبل {{count}} ساعة من انطلاق المباراة",
     "predictionsOpenIn": "تُفتح التوقعات خلال"
   },
   "form": {
