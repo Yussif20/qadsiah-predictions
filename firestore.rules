@@ -11,15 +11,15 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/matches/$(matchId)).data;
     }
 
-    // Predictions open only within 2 hours before kickoff and close at
+    // Predictions open only within 3 hours before kickoff and close at
     // kickoff. The matchDate comparisons are the real server-side lock — no
     // admin action or cron is needed to open or close a match by the clock.
-    // The 2h window mirrors PREDICTIONS_OPEN_BEFORE_HOURS in src/lib/constants.ts.
+    // The 3h window mirrors PREDICTIONS_OPEN_BEFORE_HOURS in src/lib/constants.ts.
     function matchOpen(matchId) {
       let m = matchData(matchId);
       return m.status == "upcoming"
         && m.matchDate > request.time
-        && m.matchDate < request.time + duration.value(2, 'h');
+        && m.matchDate < request.time + duration.value(3, 'h');
     }
 
     function validPrediction(data, predId) {
